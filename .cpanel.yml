@@ -1,0 +1,9 @@
+---
+# cPanel Git Version Control runs these when you click "Deploy HEAD Commit".
+# It copies only the app files into the live site folder; nothing else is touched.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ismaweb/public_html/mu.isma.org.my/
+    - /bin/cp index.html engine.js icons.js $DEPLOYPATH
+    - /bin/cp -R templates $DEPLOYPATH
+    - /bin/cp -R assets $DEPLOYPATH

@@ -26,6 +26,12 @@ Logos in `assets/` were cut from the Figma brand guide. On navy the logo is all 
 
 Social icons: Simple Icons (CC0), in `icons.js`.
 
+## Publishing
+
+Live at https://mu.isma.org.my (cPanel, folder `/public_html/mu.isma.org.my`).
+
+Updates go through cPanel's **Git Version Control**: push to GitHub, then in cPanel open the repository, click **Update from Remote**, then **Deploy HEAD Commit**. `.cpanel.yml` copies the app files into the site folder.
+
 ## Run it locally
 
 ```bash
