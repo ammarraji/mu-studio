@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f7f6f3">
+<meta name="color-scheme" content="light">
+<title>Poster Program · Murabbi Ummah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Krona+One&family=Plus+Jakarta+Sans:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3; --panel:#fff; --ink:#121620; --muted:#565e6c;
+  --line:rgba(18,22,32,.09); --soft:rgba(18,22,32,.05);
+  --navy:#1B325F; --yellow:#E9A742;
+  --ok:#1f7a4a; --warn:#a15c00; --warn-soft:#fdf0dd;
+  --r:14px; --shadow:0 1px 2px rgba(16,24,40,.05),0 12px 32px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none !important}
+
+.appbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;height:60px;padding:0 16px;background:rgba(247,246,243,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{font-family:"Plus Jakarta Sans",Inter,sans-serif;font-weight:600;font-size:17px;letter-spacing:-.01em;white-space:nowrap}
+.brand small{display:block;font-family:Inter,sans-serif;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+.appbar .right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:13.5px}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:0 8px 20px -8px rgba(38,50,58,.5)}
+.btn.block{width:100%;min-height:48px;font-size:15px}
+
+.studio{display:grid;grid-template-columns:400px 1fr;height:calc(100vh - 60px)}
+.panel{background:#fff;border-right:1px solid var(--line);overflow:auto;padding:16px 20px 32px}
+.sec{border-top:1px solid var(--line);padding:14px 0 6px}
+.sec:first-child{border-top:0;padding-top:4px}
+.sec h3{font-family:"Plus Jakarta Sans",Inter,sans-serif;font-size:14px;font-weight:600;margin:0 0 2px}
+.note{font-size:12.5px;color:var(--muted);margin:0 0 4px}
+label.fl{display:block;font-weight:600;font-size:13px;margin:12px 0 6px}
+label.fl .opt{font-weight:400;color:var(--muted)}
+input[type=text],input[type=tel],input[type=date]{width:100%;font-size:15px;padding:10px 12px;border:1px solid rgba(18,22,32,.14);border-radius:10px;background:#fff;min-height:44px;-webkit-appearance:none;appearance:none}
+input:focus{outline:3px solid rgba(233,167,66,.3);border-color:var(--yellow)}
+input.over{border-color:#e0a800;background:var(--warn-soft)}
+.hint{font-size:12px;color:var(--muted);margin-top:4px;min-height:1.2em}
+.hint.warn{color:var(--warn);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 11px;font-size:12.5px}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.upload{display:flex;gap:10px;align-items:center}
+.upload .thumb{width:52px;height:52px;border-radius:10px;background:var(--soft) center/cover no-repeat;border:1px solid var(--line);flex-shrink:0}
+.upload label{flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;border:1px dashed rgba(18,22,32,.25);border-radius:10px;font-weight:600;font-size:13px;cursor:pointer;background:#fff}
+.upload input{display:none}
+.upload .x{border:0;background:none;color:var(--muted);font-size:12.5px;padding:6px}
+.sliders{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center;font-size:12.5px;color:var(--muted);margin-top:10px}
+.sliders input{width:100%;accent-color:var(--navy)}
+.check{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-top:10px}
+.check input{width:18px;height:18px;accent-color:var(--navy)}
+
+.stage{position:relative;overflow:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;background:#ecebe7 radial-gradient(rgba(18,22,32,.10) 1px,transparent 1px) 0 0/18px 18px}
+#poster{width:min(480px,100%,calc((100vh - 60px - 110px) * .8));height:auto;aspect-ratio:4/5;display:block;background:#1B325F;box-shadow:0 1px 2px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);border-radius:4px}
+.dims{font-size:12px;color:var(--muted)}
+.mcta{display:none}
+
+@media (max-width:860px){
+  .studio{display:flex;flex-direction:column;height:auto}
+  .stage{padding:10px 16px;order:-1;position:sticky;top:60px;z-index:10;border-bottom:1px solid var(--line)}
+  #poster{width:min(44vw,220px)}
+  .stage .dims{display:none}
+  .panel{border-right:0;padding:12px 16px 100px}
+  .appbar .right{display:none}
+  input[type=text],input[type=tel],input[type=date]{font-size:16px}
+  .mcta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);padding:10px 16px max(10px,env(safe-area-inset-bottom))}
+}
+</style>
+</head>
+<body>
+<header class="appbar">
+  <div class="brand">Poster program<small>Murabbi Ummah</small></div>
+  <div class="right"><span class="dims">1080 × 1350 · PNG</span><button class="btn dark" type="button" data-download>Muat turun poster</button></div>
+</header>
+
+<div class="studio">
+  <aside class="panel">
+    <div class="sec">
+      <h3>Program</h3>
+      <p class="note" id="sample-note" hidden>Ini contoh. Tukar kepada maklumat program anda.</p>
+      <label class="fl" for="f-jenis">Jenis program</label>
+      <div class="chips" id="jenis-chips"></div>
+      <input type="text" id="f-jenis" data-f="jenis" maxlength="20">
+      <label class="fl" for="f-tajuk">Tajuk</label>
+      <input type="text" id="f-tajuk" data-f="tajuk" placeholder="cth. Al-Quran & Ramadan">
+      <div class="hint" data-hint="tajuk"></div>
+      <label class="fl" for="f-siri">Siri atau subtajuk <span class="opt">(pilihan)</span></label>
+      <input type="text" id="f-siri" data-f="siri" placeholder="cth. Siri 1: Rasulullah dan Sahabat bersama Al-Quran">
+      <div class="hint" data-hint="siri"></div>
+    </div>
+
+    <div class="sec">
+      <h3>Penceramah</h3>
+      <label class="fl" for="f-nama">Nama penuh dengan gelaran</label>
+      <input type="text" id="f-nama" data-f="nama" placeholder="cth. Ustaz Ahmad bin Ali">
+      <div class="hint" data-hint="nama"></div>
+      <label class="fl" for="f-kelayakan">Kelayakan atau jawatan <span class="opt">(pilihan)</span></label>
+      <input type="text" id="f-kelayakan" data-f="kelayakan" placeholder="cth. Graduan Universiti al-Azhar, Mesir">
+      <div class="hint" data-hint="kelayakan"></div>
+      <label class="fl">Gambar penceramah</label>
+      <div class="upload">
+        <div class="thumb" id="thumb-photo"></div>
+        <label>Pilih gambar<input type="file" accept="image/*" data-img="photo"></label>
+        <button class="x" type="button" data-clear="photo" hidden>Buang</button>
+      </div>
+      <div class="sliders" id="photo-sliders" hidden>
+        <span>Zum</span><input type="range" min="1" max="2.5" step="0.01" value="1" data-s="photoZoom">
+        <span>Kiri–kanan</span><input type="range" min="-1" max="1" step="0.01" value="0" data-s="photoX">
+        <span>Atas–bawah</span><input type="range" min="-1" max="1" step="0.01" value="-0.4" data-s="photoY">
+      </div>
+      <div class="hint">Gambar menegak, muka jelas. PNG berlatar lutsinar pun boleh.</div>
+    </div>
+
+    <div class="sec">
+      <h3>Tarikh dan tempat</h3>
+      <label class="fl" for="f-tarikh">Tarikh</label>
+      <input type="date" id="f-tarikh" data-f="tarikh">
+      <div class="hint" id="tarikh-show"></div>
+      <label class="fl" for="f-masa">Masa</label>
+      <input type="text" id="f-masa" data-f="masa" placeholder="cth. 7.45 malam (selepas Maghrib)">
+      <div class="hint" data-hint="masa"></div>
+      <label class="fl" for="f-tempat">Tempat</label>
+      <input type="text" id="f-tempat" data-f="tempat" placeholder="cth. Masjid al-Hasanah, Bangi">
+      <div class="hint" data-hint="tempat"></div>
+    </div>
+
+    <div class="sec">
+      <h3>Logo rakan</h3>
+      <label class="check"><input type="checkbox" data-t="isma"> Logo ISMA</label>
+      <label class="fl">Logo masjid atau penganjur <span class="opt">(pilihan)</span></label>
+      <div class="upload">
+        <div class="thumb" id="thumb-masjid" style="background-size:contain"></div>
+        <label>Pilih logo<input type="file" accept="image/*" data-img="masjid"></label>
+        <button class="x" type="button" data-clear="masjid" hidden>Buang</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h3>Hubungi</h3>
+      <label class="fl" for="f-akaun">Akaun media sosial <span class="opt">(pilihan)</span></label>
+      <div class="chips" id="sosial-chips"></div>
+      <input type="text" id="f-akaun" data-f="akaun" placeholder="cth. murabbiummah">
+      <div class="hint" data-hint="akaun"></div>
+      <label class="fl" for="f-telefon">No. telefon <span class="opt">(pilihan)</span></label>
+      <input type="tel" id="f-telefon" data-f="telefon" placeholder="cth. 012-345 6789">
+      <div class="hint" data-hint="telefon"></div>
+    </div>
+
+    <div class="sec">
+      <button class="btn block" type="button" id="reset">Kosongkan borang</button>
+    </div>
+  </aside>
+
+  <section class="stage">
+    <canvas id="poster" width="1080" height="1350" aria-label="Pratonton poster"></canvas>
+    <span class="dims">Pratonton. Poster dimuat turun pada saiz penuh 1080 × 1350.</span>
+  </section>
+</div>
+
+<div class="mcta"><button class="btn dark block" type="button" data-download>Muat turun poster</button></div>
+
+<script src="icons.js"></script>
+<script>
+/* ===================== brand ===================== */
+const NAVY = "#1B325F", NAVY_DEEP = "#14264A", YELLOW = "#E9A742", WHITE = "#FFFFFF";
+const HEAD = '"Krona One"', BODY = "Inter";
+const W = 1080, H = 1350, M = 80;   // canvas size and side margin
+
+const ASSETS = {
+  muLogo: "assets/mu-logo-horizontal-on-navy.png",   // added when the logo files arrive
+  muMark: "assets/mu-mark.png",                       // monogram only, for the background graphic
+  isma: "assets/logo-isma.png",
+};
+
+/* ===================== state ===================== */
+const JENIS = ["Kuliah", "Ceramah", "Kelas", "Tuisyen", "Forum"];
+const SOSIAL = [["facebook", "Facebook"], ["telegram", "Telegram"], ["instagram", "Instagram"], ["x", "X"], ["tiktok", "TikTok"]];
+const SAMPLE = {
+  jenis: "Kuliah", tajuk: "Al-Quran & Ramadan", siri: "Siri 1: Rasulullah dan Sahabat bersama Al-Quran",
+  nama: "Ustaz Nur Wan Kecik bin Wan Lebor", kelayakan: "Graduan Universiti al-Azhar, Mesir",
+  tarikh: "2026-02-28", masa: "7.45 malam (selepas Maghrib)", tempat: "Masjid al-Hasanah, Bangi",
+  akaun: "murabbiummah", telefon: "012-345 6789",
+  isma: true, sosial: ["facebook", "telegram", "instagram", "x", "tiktok"],
+  photoZoom: 1, photoX: 0, photoY: -0.4,
+};
+const EMPTY = { jenis: "Kuliah", tajuk: "", siri: "", nama: "", kelayakan: "", tarikh: "", masa: "", tempat: "", akaun: "", telefon: "",
+  isma: true, sosial: ["facebook", "instagram"], photoZoom: 1, photoX: 0, photoY: -0.4 };
+
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem("mu:program") || "null"); } catch { return null; } },
+  set(v) { try { localStorage.setItem("mu:program", JSON.stringify(v)); } catch {} },
+};
+const saved = store.get();
+let S = Object.assign({}, saved || SAMPLE);
+const imgs = { photo: null, masjid: null, muLogo: null, muMark: null, isma: null };
+const overflow = {};
+
+/* ===================== helpers ===================== */
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const HARI = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+const BULAN = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+function tarikhPoster(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+  if (!m) return "";
+  const d = new Date(+m[1], +m[2] - 1, +m[3]);
+  return `${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()} (${HARI[d.getDay()]})`;
+}
+function loadImg(src) {
+  return new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
+}
+
+/* ===================== canvas text ===================== */
+const cv = $("#poster"), ctx = cv.getContext("2d");
+const hasLS = "letterSpacing" in ctx;
+function setFont(size, family, weight) { ctx.font = `${weight || 400} ${size}px ${family}`; }
+function textW(t, track) { return ctx.measureText(t).width + (hasLS ? 0 : track * Math.max(0, t.length - 1)); }
+function wrap(text, maxW, track) {
+  const words = text.split(/\s+/).filter(Boolean), lines = [];
+  let line = "";
+  for (const w of words) {
+    const test = line ? line + " " + w : w;
+    if (textW(test, track) <= maxW || !line) line = test; else { lines.push(line); line = w; }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+// Shrink the font until the text fits the box; report overflow so the form can warn.
+function fitText(key, text, o) {
+  const t = o.upper ? text.toLocaleUpperCase("ms") : text;
+  if (!t) { overflow[key] = false; return { h: 0, lines: [] }; }
+  let size = o.max, lines, ok = false;
+  for (; size >= o.min; size -= 1) {
+    setFont(size, o.family, o.weight);
+    const track = (o.track || 0) * size;
+    if (hasLS) ctx.letterSpacing = track + "px";
+    lines = wrap(t, o.w, track);
+    const h = lines.length * size * o.lh;
+    if (lines.length <= o.lines && h <= o.h + 0.5 && lines.every((l) => textW(l, track) <= o.w)) { ok = true; break; }
+  }
+  if (!ok) { size = o.min; setFont(size, o.family, o.weight); lines = wrap(t, o.w, (o.track || 0) * size).slice(0, o.lines); }
+  overflow[key] = !ok;
+  const track = (o.track || 0) * size;
+  if (hasLS) ctx.letterSpacing = track + "px";
+  ctx.fillStyle = o.color; ctx.textBaseline = "alphabetic";
+  const blockH = lines.length * size * o.lh;
+  let y = o.y + (o.valign === "bottom" ? o.h - blockH : 0);
+  for (const l of lines) {
+    const lw = textW(l, track);
+    const x = o.align === "right" ? o.x + o.w - lw : o.align === "center" ? o.x + (o.w - lw) / 2 : o.x;
+    const base = y + size * (o.lh - 1) / 2 + size * (o.ascent || 0.78);
+    if (hasLS || !track) ctx.fillText(l, x, base);
+    else { let cx = x; for (const ch of l) { ctx.fillText(ch, cx, base); cx += ctx.measureText(ch).width + track; } }
+    y += size * o.lh;
+  }
+  if (hasLS) ctx.letterSpacing = "0px";
+  return { h: blockH, lines, size };
+}
+
+/* ===================== canvas shapes ===================== */
+// rectangle with its own radius per corner: [top-left, top-right, bottom-right, bottom-left]
+function rr(x, y, w, h, r) {
+  const [a, b, c, d] = r;
+  ctx.beginPath();
+  ctx.moveTo(x + a, y); ctx.lineTo(x + w - b, y); ctx.arcTo(x + w, y, x + w, y + b, b);
+  ctx.lineTo(x + w, y + h - c); ctx.arcTo(x + w, y + h, x + w - c, y + h, c);
+  ctx.lineTo(x + d, y + h); ctx.arcTo(x, y + h, x, y + h - d, d);
+  ctx.lineTo(x, y + a); ctx.arcTo(x, y, x + a, y, a); ctx.closePath();
+}
+function drawCover(img, x, y, w, h, zoom, px, py) {
+  const s = Math.max(w / img.width, h / img.height) * zoom;
+  const iw = img.width * s, ih = img.height * s;
+  ctx.drawImage(img, x + (w - iw) / 2 + px * (iw - w) / 2, y + (h - ih) / 2 + py * (ih - h) / 2, iw, ih);
+}
+function drawContain(img, x, y, w, h, align) {
+  const s = Math.min(w / img.width, h / img.height), iw = img.width * s, ih = img.height * s;
+  const dx = align === "right" ? x + w - iw : align === "left" ? x : x + (w - iw) / 2;
+  ctx.drawImage(img, dx, y + (h - ih) / 2, iw, ih);
+  return iw;
+}
+const ICON = {
+  tarikh: new Path2D("M4.5 6h15A1.5 1.5 0 0 1 21 7.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5v-11A1.5 1.5 0 0 1 4.5 6zM3 10.5h18M8 3.5v4M16 3.5v4"),
+  masa: new Path2D("M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM12 7.5V12l3.2 2"),
+  tempat: new Path2D("M12 21s-6.8-6-6.8-11.3a6.8 6.8 0 0 1 13.6 0C18.8 15 12 21 12 21zM12 7.2a2.5 2.5 0 1 0 0 5a2.5 2.5 0 1 0 0-5z"),
+};
+function strokeIcon(path, x, y, size, color) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(size / 24, size / 24);
+  ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.stroke(path); ctx.restore();
+}
+function fillIcon(d, x, y, size, color) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(size / 24, size / 24); ctx.fillStyle = color; ctx.fill(new Path2D(d)); ctx.restore();
+}
+
+/* ===================== the poster ===================== */
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = NAVY; ctx.fillRect(0, 0, W, H);
+
+  // background graphic: the monogram, very faint, cropped at the top right (built from logo pieces until the file arrives)
+  ctx.save();
+  if (imgs.muMark) { ctx.globalAlpha = 0.07; ctx.drawImage(imgs.muMark, 600, -70, 560, 560 * imgs.muMark.height / imgs.muMark.width); }
+  else {
+    // kept above the title (y < 190) and in the empty space left of the photo, so nothing sits behind text
+    ctx.fillStyle = "rgba(255,255,255,.05)";
+    rr(640, -60, 70, 210, [0, 0, 70, 70]); ctx.fill();
+    rr(740, -60, 70, 170, [0, 0, 70, 0]); ctx.fill();
+    ctx.fillStyle = "rgba(233,167,66,.12)";
+    rr(-40, 540, 300, 64, [0, 0, 64, 0]); ctx.fill();
+  }
+  ctx.restore();
+
+  // header: Murabbi Ummah logo left, partner logos right
+  const logoY = 64, logoH = 64;
+  if (imgs.muLogo) drawContain(imgs.muLogo, M, logoY, 300, logoH, "left");
+  else {
+    ctx.fillStyle = YELLOW; rr(M, logoY + 6, 52, 52, [26, 0, 26, 0]); ctx.fill();
+    setFont(22, HEAD); ctx.fillStyle = WHITE; ctx.fillText("MURABBI", M + 68, logoY + 28);
+    ctx.fillStyle = YELLOW; ctx.fillText("UMMAH", M + 68, logoY + 56);
+  }
+  let rx = W - M;
+  for (const key of ["masjid", "isma"]) {
+    const img = key === "isma" ? (S.isma ? imgs.isma : null) : imgs.masjid;
+    if (!img) continue;
+    const used = drawContain(img, rx - 150, logoY, 150, logoH, "right");
+    rx -= used + 28;
+  }
+
+  // programme type: a yellow tag
+  const jenis = (S.jenis || "").trim().toLocaleUpperCase("ms");
+  let y = 196;
+  if (jenis) {
+    setFont(24, HEAD); const tw = ctx.measureText(jenis).width;
+    ctx.fillStyle = YELLOW; rr(M, y, tw + 48, 52, [26, 26, 26, 0]); ctx.fill();
+    ctx.fillStyle = NAVY; ctx.fillText(jenis, M + 24, y + 36);
+  }
+
+  // title and series line
+  const hasSiri = !!(S.siri || "").trim();
+  const t = fitText("tajuk", S.tajuk || "", { x: M, y: 278, w: W - 2 * M, h: hasSiri ? 196 : 262, family: HEAD, max: 86, min: 40, lh: 1.1, lines: 3, upper: true, color: WHITE, ascent: 0.8 });
+  if (hasSiri) fitText("siri", S.siri, { x: M, y: 278 + t.h + 18, w: W - 2 * M, h: 80, family: BODY, weight: 600, max: 30, min: 20, lh: 1.3, lines: 2, color: YELLOW });
+  else overflow.siri = false;
+
+  // speaker: photo panel bleeding off the right edge, one big rounded corner like the logo strokes
+  const pX = 540, pY = 560, pW = W - pX, pH = 520;
+  ctx.save(); rr(pX, pY, pW, pH, [220, 0, 0, 0]); ctx.clip();
+  ctx.fillStyle = YELLOW; ctx.fillRect(pX, pY, pW, pH);
+  if (imgs.photo) drawCover(imgs.photo, pX, pY, pW, pH, +S.photoZoom || 1, +S.photoX || 0, +S.photoY || 0);
+  else {
+    ctx.fillStyle = "rgba(27,50,95,.18)";
+    ctx.beginPath(); ctx.arc(pX + pW / 2, pY + 210, 92, 0, Math.PI * 2); ctx.fill();
+    rr(pX + pW / 2 - 170, pY + 330, 340, 260, [170, 170, 0, 0]); ctx.fill();
+    setFont(22, BODY, 600); ctx.fillStyle = NAVY; ctx.textAlign = "center"; ctx.fillText("Gambar penceramah", pX + pW / 2, pY + 60); ctx.textAlign = "left";
+  }
+  ctx.restore();
+
+  // speaker text, vertically centred beside the photo: measure the name first, then draw
+  const nameBox = { x: M, w: pX - M - 44, family: HEAD, max: 40, min: 22, lh: 1.18, lines: 4, upper: true, color: WHITE, ascent: 0.8 };
+  let nSize = nameBox.max, nLines = [];
+  for (; nSize >= nameBox.min; nSize--) { setFont(nSize, HEAD); nLines = wrap((S.nama || "").toLocaleUpperCase("ms"), nameBox.w, 0); if (nLines.length <= nameBox.lines) break; }
+  const nameH = S.nama ? nLines.length * nSize * nameBox.lh : 0;
+  const blockTop = pY + (pH - (44 + nameH + (S.kelayakan ? 70 : 0))) / 2;
+  setFont(20, BODY, 700); ctx.fillStyle = YELLOW;
+  if (hasLS) ctx.letterSpacing = "4px"; ctx.fillText("BERSAMA", M, blockTop + 20); if (hasLS) ctx.letterSpacing = "0px";
+  const n = fitText("nama", S.nama || "", Object.assign({ y: blockTop + 44, h: 4 * 40 * 1.18 }, nameBox));
+  if (S.kelayakan) fitText("kelayakan", S.kelayakan, { x: M, y: blockTop + 44 + n.h + 14, w: pX - M - 44, h: 64, family: BODY, weight: 400, max: 24, min: 17, lh: 1.3, lines: 2, color: "rgba(255,255,255,.86)" });
+  else overflow.kelayakan = false;
+
+  // details band
+  const bY = pY + pH, bH = 192;
+  ctx.fillStyle = YELLOW; ctx.fillRect(0, bY, W, bH);
+  const rows = [["tarikh", tarikhPoster(S.tarikh)], ["masa", S.masa || ""], ["tempat", S.tempat || ""]].filter(([, v]) => v);
+  const rowH = 54, startY = bY + (bH - rows.length * rowH) / 2;
+  rows.forEach(([k, v], i) => {
+    const ry = startY + i * rowH;
+    strokeIcon(ICON[k], M, ry + 9, 36, NAVY);
+    fitText(k, v, { x: M + 58, y: ry + 4, w: W - 2 * M - 58, h: 46, family: BODY, weight: 700, max: 34, min: 22, lh: 1.25, lines: 1, color: NAVY });
+  });
+  if (!S.tarikh) overflow.tarikh = false;
+
+  // footer: social accounts left, phone right
+  const fY = bY + bH, fH = H - fY;
+  ctx.fillStyle = NAVY_DEEP; ctx.fillRect(0, fY, W, fH);
+  const cy = fY + fH / 2;
+  let fx = M;
+  const akaun = (S.akaun || "").trim();
+  if (akaun && S.sosial.length) {
+    for (const key of SOSIAL.map((s) => s[0]).filter((k) => S.sosial.includes(k))) {
+      ctx.fillStyle = YELLOW; ctx.beginPath(); ctx.arc(fx + 17, cy, 17, 0, Math.PI * 2); ctx.fill();
+      fillIcon(SOCIAL_ICONS[key], fx + 7, cy - 10, 20, NAVY_DEEP);
+      fx += 42;
+    }
+    fx += 10;
+  }
+  const tel = (S.telefon || "").trim();
+  if (tel) fitText("telefon", "HUBUNGI: " + tel, { x: W / 2 + 40, y: cy - 16, w: W / 2 - 40 - M, h: 32, family: BODY, weight: 700, max: 24, min: 16, lh: 1.25, lines: 1, align: "right", color: YELLOW });
+  else overflow.telefon = false;
+  if (akaun) fitText("akaun", akaun, { x: fx, y: cy - 16, w: (tel ? W / 2 + 20 : W - M) - fx, h: 32, family: BODY, weight: 700, max: 24, min: 15, lh: 1.25, lines: 1, color: YELLOW });
+  else overflow.akaun = false;
+
+  renderHints();
+}
+
+/* ===================== form ===================== */
+const FIELD_LABEL = { tajuk: "Tajuk", siri: "Siri", nama: "Nama", kelayakan: "Kelayakan", masa: "Masa", tempat: "Tempat", akaun: "Akaun", telefon: "Telefon" };
+function renderHints() {
+  $$("[data-hint]").forEach((el) => {
+    const k = el.dataset.hint, over = !!overflow[k];
+    el.className = "hint" + (over ? " warn" : "");
+    el.textContent = over ? "Terlalu panjang. Pendekkan supaya muat di poster." : "";
+    const inp = $("#f-" + k); if (inp) inp.classList.toggle("over", over);
+  });
+  $("#tarikh-show").textContent = S.tarikh ? "Di poster: " + tarikhPoster(S.tarikh) : "";
+  $("#sample-note").hidden = !(S.tajuk === SAMPLE.tajuk && S.nama === SAMPLE.nama);
+}
+function fillForm() {
+  $$("[data-f]").forEach((el) => (el.value = S[el.dataset.f] || ""));
+  $$("[data-s]").forEach((el) => (el.value = S[el.dataset.s]));
+  $$("[data-t]").forEach((el) => (el.checked = !!S[el.dataset.t]));
+  $("#jenis-chips").innerHTML = JENIS.map((j) => `<button type="button" class="chip" data-jenis="${j}" aria-pressed="${S.jenis === j}">${j}</button>`).join("");
+  $("#sosial-chips").innerHTML = SOSIAL.map(([k, l]) => `<button type="button" class="chip" data-sosial="${k}" aria-pressed="${S.sosial.includes(k)}">${l}</button>`).join("");
+}
+let raf = 0;
+function update() { store.set(S); cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }
+
+document.addEventListener("input", (e) => {
+  const d = e.target.dataset;
+  if (d.f) S[d.f] = e.target.value;
+  else if (d.s) S[d.s] = +e.target.value;
+  else return;
+  if (d.f === "jenis") $$("[data-jenis]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.jenis === S.jenis)));
+  update();
+});
+document.addEventListener("change", (e) => {
+  const d = e.target.dataset;
+  if (d.t) { S[d.t] = e.target.checked; update(); }
+  if (d.img) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    loadImg(url).then((img) => {
+      if (!img) { alert("Gambar tidak dapat dibuka. Cuba fail JPG atau PNG."); return; }
+      imgs[d.img] = img;
+      $("#thumb-" + d.img).style.backgroundImage = `url(${url})`;
+      $(`[data-clear="${d.img}"]`).hidden = false;
+      if (d.img === "photo") $("#photo-sliders").hidden = false;
+      update();
+    });
+    e.target.value = "";
+  }
+});
+document.addEventListener("click", (e) => {
+  const j = e.target.closest("[data-jenis]");
+  if (j) { S.jenis = j.dataset.jenis; $("#f-jenis").value = S.jenis; $$("[data-jenis]").forEach((b) => b.setAttribute("aria-pressed", String(b === j))); update(); return; }
+  const s = e.target.closest("[data-sosial]");
+  if (s) {
+    const k = s.dataset.sosial;
+    S.sosial = S.sosial.includes(k) ? S.sosial.filter((x) => x !== k) : S.sosial.concat(k);
+    s.setAttribute("aria-pressed", String(S.sosial.includes(k))); update(); return;
+  }
+  const c = e.target.closest("[data-clear]");
+  if (c) {
+    imgs[c.dataset.clear] = null; $("#thumb-" + c.dataset.clear).style.backgroundImage = ""; c.hidden = true;
+    if (c.dataset.clear === "photo") $("#photo-sliders").hidden = true;
+    update(); return;
+  }
+  if (e.target.closest("[data-download]")) { download(); return; }
+  if (e.target.id === "reset") {
+    if (!confirm("Kosongkan semua maklumat?")) return;
+    S = Object.assign({}, EMPTY); imgs.photo = null; imgs.masjid = null;
+    ["photo", "masjid"].forEach((k) => { $("#thumb-" + k).style.backgroundImage = ""; $(`[data-clear="${k}"]`).hidden = true; });
+    $("#photo-sliders").hidden = true; fillForm(); update();
+  }
+});
+
+function download() {
+  draw();
+  const bad = Object.keys(overflow).filter((k) => overflow[k]);
+  if (bad.length && !confirm("Ada teks yang terlalu panjang (" + bad.map((k) => FIELD_LABEL[k] || k).join(", ") + "). Muat turun juga?")) return;
+  const name = ("MU-" + (S.tajuk || "poster") + "-" + (S.tarikh || "")).replace(/[^\w-]+/g, "-").replace(/-+/g, "-").replace(/-$/, "");
+  cv.toBlob((b) => {
+    const url = URL.createObjectURL(b), a = document.createElement("a");
+    a.href = url; a.download = name + ".png"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  }, "image/png");
+}
+
+/* ===================== start ===================== */
+(async function start() {
+  fillForm();
+  const [muLogo, muMark, isma] = await Promise.all([loadImg(ASSETS.muLogo), loadImg(ASSETS.muMark), loadImg(ASSETS.isma)]);
+  Object.assign(imgs, { muLogo, muMark, isma });
+  try {
+    await Promise.all(['400 40px "Krona One"', "400 24px Inter", "600 24px Inter", "700 24px Inter"].map((f) => document.fonts.load(f)));
+  } catch {}
+  draw();
+  document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>
