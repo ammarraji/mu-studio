@@ -305,9 +305,9 @@ function draw() {
   ctx.clearRect(0, 0, W, H);
   ctx.fillStyle = NAVY; ctx.fillRect(0, 0, W, H);
 
-  // background graphic: the monogram, very faint, cropped at the top right (built from logo pieces until the file arrives)
+  // background graphic: the monogram, very faint, cropped off the left edge behind the speaker text
   ctx.save();
-  if (imgs.muMark) { ctx.globalAlpha = 0.07; ctx.drawImage(imgs.muMark, 600, -70, 560, 560 * imgs.muMark.height / imgs.muMark.width); }
+  if (imgs.muMark) { ctx.globalAlpha = 0.06; ctx.drawImage(imgs.muMark, -130, 540, 380, 380 * imgs.muMark.height / imgs.muMark.width); }
   else {
     // kept above the title (y < 190) and in the empty space left of the photo, so nothing sits behind text
     ctx.fillStyle = "rgba(255,255,255,.05)";
@@ -318,9 +318,9 @@ function draw() {
   }
   ctx.restore();
 
-  // header: Murabbi Ummah logo left, partner logos right
-  const logoY = 64, logoH = 64;
-  if (imgs.muLogo) drawContain(imgs.muLogo, M, logoY, 300, logoH, "left");
+  // header: Murabbi Ummah logo left (all-yellow version, the guide's colour for navy), partner logos right
+  const logoY = 56, logoH = 80;
+  if (imgs.muLogo) drawContain(imgs.muLogo, M, logoY, 340, logoH, "left");
   else {
     ctx.fillStyle = YELLOW; rr(M, logoY + 6, 52, 52, [26, 0, 26, 0]); ctx.fill();
     setFont(22, HEAD); ctx.fillStyle = WHITE; ctx.fillText("MURABBI", M + 68, logoY + 28);
@@ -330,8 +330,8 @@ function draw() {
   for (const key of ["masjid", "isma"]) {
     const img = key === "isma" ? (S.isma ? imgs.isma : null) : imgs.masjid;
     if (!img) continue;
-    const used = drawContain(img, rx - 150, logoY, 150, logoH, "right");
-    rx -= used + 28;
+    const used = drawContain(img, rx - 170, logoY - 12, 170, logoH + 24, "right");
+    rx -= used + 32;
   }
 
   // programme type: a yellow tag
@@ -349,21 +349,24 @@ function draw() {
   if (hasSiri) fitText("siri", S.siri, { x: M, y: 278 + t.h + 18, w: W - 2 * M, h: 80, family: BODY, weight: 600, max: 30, min: 20, lh: 1.3, lines: 2, color: YELLOW });
   else overflow.siri = false;
 
-  // speaker: photo panel bleeding off the right edge, one big rounded corner like the logo strokes
-  const pX = 540, pY = 560, pW = W - pX, pH = 520;
-  ctx.save(); rr(pX, pY, pW, pH, [220, 0, 0, 0]); ctx.clip();
-  ctx.fillStyle = YELLOW; ctx.fillRect(pX, pY, pW, pH);
+  // speaker: photo in a white rounded box on the right, like the original template
+  const pX = 590, pY = 600, pW = W - M - pX, pH = 456;
+  ctx.save();
+  ctx.shadowColor = "rgba(8,18,40,.35)"; ctx.shadowBlur = 36; ctx.shadowOffsetY = 12;
+  ctx.fillStyle = WHITE; rr(pX, pY, pW, pH, [24, 24, 24, 24]); ctx.fill();
+  ctx.restore();
+  ctx.save(); rr(pX, pY, pW, pH, [24, 24, 24, 24]); ctx.clip();
   if (imgs.photo) drawCover(imgs.photo, pX, pY, pW, pH, +S.photoZoom || 1, +S.photoX || 0, +S.photoY || 0);
   else {
-    ctx.fillStyle = "rgba(27,50,95,.18)";
-    ctx.beginPath(); ctx.arc(pX + pW / 2, pY + 210, 92, 0, Math.PI * 2); ctx.fill();
-    rr(pX + pW / 2 - 170, pY + 330, 340, 260, [170, 170, 0, 0]); ctx.fill();
-    setFont(22, BODY, 600); ctx.fillStyle = NAVY; ctx.textAlign = "center"; ctx.fillText("Gambar penceramah", pX + pW / 2, pY + 60); ctx.textAlign = "left";
+    ctx.fillStyle = "rgba(27,50,95,.12)";
+    ctx.beginPath(); ctx.arc(pX + pW / 2, pY + 190, 84, 0, Math.PI * 2); ctx.fill();
+    rr(pX + pW / 2 - 150, pY + 300, 300, 220, [150, 150, 0, 0]); ctx.fill();
+    setFont(22, BODY, 600); ctx.fillStyle = NAVY; ctx.textAlign = "center"; ctx.fillText("Gambar penceramah", pX + pW / 2, pY + 58); ctx.textAlign = "left";
   }
   ctx.restore();
 
   // speaker text, vertically centred beside the photo: measure the name first, then draw
-  const nameBox = { x: M, w: pX - M - 44, family: HEAD, max: 40, min: 22, lh: 1.18, lines: 4, upper: true, color: WHITE, ascent: 0.8 };
+  const nameBox = { x: M, w: pX - M - 40, family: HEAD, max: 40, min: 22, lh: 1.18, lines: 4, upper: true, color: WHITE, ascent: 0.8 };
   let nSize = nameBox.max, nLines = [];
   for (; nSize >= nameBox.min; nSize--) { setFont(nSize, HEAD); nLines = wrap((S.nama || "").toLocaleUpperCase("ms"), nameBox.w, 0); if (nLines.length <= nameBox.lines) break; }
   const nameH = S.nama ? nLines.length * nSize * nameBox.lh : 0;
@@ -371,11 +374,11 @@ function draw() {
   setFont(20, BODY, 700); ctx.fillStyle = YELLOW;
   if (hasLS) ctx.letterSpacing = "4px"; ctx.fillText("BERSAMA", M, blockTop + 20); if (hasLS) ctx.letterSpacing = "0px";
   const n = fitText("nama", S.nama || "", Object.assign({ y: blockTop + 44, h: 4 * 40 * 1.18 }, nameBox));
-  if (S.kelayakan) fitText("kelayakan", S.kelayakan, { x: M, y: blockTop + 44 + n.h + 14, w: pX - M - 44, h: 64, family: BODY, weight: 400, max: 24, min: 17, lh: 1.3, lines: 2, color: "rgba(255,255,255,.86)" });
+  if (S.kelayakan) fitText("kelayakan", S.kelayakan, { x: M, y: blockTop + 44 + n.h + 14, w: pX - M - 40, h: 64, family: BODY, weight: 400, max: 24, min: 17, lh: 1.3, lines: 2, color: "rgba(255,255,255,.86)" });
   else overflow.kelayakan = false;
 
   // details band
-  const bY = pY + pH, bH = 192;
+  const bY = 1080, bH = 192;   // details band sits just below the photo box
   ctx.fillStyle = YELLOW; ctx.fillRect(0, bY, W, bH);
   const rows = [["tarikh", tarikhPoster(S.tarikh)], ["masa", S.masa || ""], ["tempat", S.tempat || ""]].filter(([, v]) => v);
   const rowH = 54, startY = bY + (bH - rows.length * rowH) / 2;
