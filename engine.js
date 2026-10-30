@@ -26,6 +26,9 @@ const upper = (t) => (t || "").toLocaleUpperCase("ms");
 const cv = document.getElementById("poster");
 const ctx = cv.getContext("2d");
 const hasLS = "letterSpacing" in ctx;
+// smooth, high-quality scaling so thin lines in logos stay intact when shrunk
+ctx.imageSmoothingEnabled = true;
+ctx.imageSmoothingQuality = "high";
 
 function setFont(size, family, weight) { ctx.font = `${weight || 400} ${size}px ${family}`; }
 function textW(t, track) { return ctx.measureText(t).width + (hasLS ? 0 : (track || 0) * Math.max(0, t.length - 1)); }

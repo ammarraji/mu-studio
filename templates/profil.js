@@ -32,16 +32,18 @@ TEMPLATES.profil = {
     ctx.fillStyle = BRAND.navy; ctx.fillRect(0, 0, W, H);
     drawHeader(S, imgs);
 
-    // tag + branch name
-    const tagW = drawTag("Profil murabbi", M, 186);
-    if ((S.cawangan || "").trim()) fitText("cawangan", "Cawangan " + S.cawangan.trim(), { x: M + tagW + 20, y: 195, w: 580 - M - tagW - 20, h: 36, family: BODY, weight: 600, max: 28, min: 18, lh: 1.25, lines: 1, color: BRAND.yellow });
+    // tag, with the branch name on its own line below it
+    const pX = 600, pY = 186, pW = W - M - pX, pH = 440;
+    drawTag("Profil murabbi", M, 186);
+    const hasCaw = !!(S.cawangan || "").trim();
+    if (hasCaw) fitText("cawangan", "Cawangan " + S.cawangan.trim(), { x: M, y: 254, w: pX - M - 40, h: 38, family: BODY, weight: 600, max: 30, min: 20, lh: 1.25, lines: 1, color: BRAND.yellow });
     else OVER.cawangan = false;
 
     // name and credential left, photo box right
-    const pX = 600, pY = 186, pW = W - M - pX, pH = 440;
     drawPhotoBox(imgs.photo, S, "photo", pX, pY, pW, pH);
-    const name = { x: M, w: pX - M - 40, h: 4 * 46 * 1.16, family: HEAD, max: 46, min: 24, lh: 1.16, lines: 4, upper: true, color: BRAND.white, ascent: 0.8 };
-    const nameTop = 268 + Math.max(0, (pY + pH - 268 - (measureText(S.nama, name) + (S.kelayakan ? 80 : 0))) / 2 - 20);
+    const top0 = hasCaw ? 322 : 268, credH = S.kelayakan ? 80 : 0;
+    const name = { x: M, w: pX - M - 40, h: Math.min(4 * 46 * 1.16, pY + pH - top0 - credH), family: HEAD, max: 46, min: 24, lh: 1.16, lines: 4, upper: true, color: BRAND.white, ascent: 0.8 };
+    const nameTop = top0 + Math.max(0, (pY + pH - top0 - (measureText(S.nama, name) + credH)) / 2 - 20);
     const n = fitText("nama", S.nama, Object.assign({ y: nameTop }, name));
     if (S.kelayakan) fitText("kelayakan", S.kelayakan, { x: M, y: nameTop + n.h + 16, w: pX - M - 40, h: 66, family: BODY, max: 24, min: 17, lh: 1.3, lines: 2, color: "rgba(255,255,255,.86)" });
     else OVER.kelayakan = false;

@@ -37,7 +37,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .pill.primary:hover{background:var(--navy-2)}
 .pill.ghost{background:transparent;border-color:transparent;color:var(--muted)}
 .pill.block{width:100%;min-height:50px;font-size:15px}
-.circle{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#fff;border:1px solid var(--line);flex-shrink:0}
+.circle{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#fff;border:1px solid var(--line);color:var(--navy);flex-shrink:0}
 .pill:active,.circle:active{transform:scale(.98)}
 
 /* ---------- home ---------- */
@@ -229,13 +229,13 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 </div>
 
 <!-- ?v= matches VERSION below: bump both on every release so phones never mix old and new files -->
-<script src="icons.js?v=1.2"></script>
-<script src="engine.js?v=1.2"></script>
-<script src="templates/program.js?v=1.2"></script>
-<script src="templates/profil.js?v=1.2"></script>
+<script src="icons.js?v=1.3"></script>
+<script src="engine.js?v=1.3"></script>
+<script src="templates/program.js?v=1.3"></script>
+<script src="templates/profil.js?v=1.3"></script>
 <script>
 /* ---------- state ---------- */
-const VERSION = "1.2 · 30 Okt 2026";   // also bump the ?v= on the script tags
+const VERSION = "1.3 · 30 Okt 2026";   // also bump the ?v= on the script tags
 // staging site and local preview show a marker, so they are never mistaken for the live site
 const ENV = /staging/.test(location.hostname) ? "Staging" : /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? "Local" : "";   // bump on every release, so the live version is visible on the home page
 const $ = (s) => document.querySelector(s);
