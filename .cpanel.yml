@@ -1,9 +1,12 @@
 ---
 # cPanel Git Version Control runs these when you click "Deploy HEAD Commit".
-# It copies only the app files into the live site folder; nothing else is touched.
+# Only the main branch deploys, to the live site https://mu.isma.org.my.
+# Any other branch stops here without copying anything.
+# Staging is local: changes are reviewed on http://localhost:5082 before they reach main.
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/ismaweb/public_html/mu.isma.org.my/
-    - /bin/cp index.html engine.js icons.js $DEPLOYPATH
-    - /bin/cp -R templates $DEPLOYPATH
-    - /bin/cp -R assets $DEPLOYPATH
+    - export BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    - if [ "$BRANCH" = "main" ]; then export DEPLOYPATH=/home/ismaweb/public_html/mu.isma.org.my/; else export DEPLOYPATH=; fi
+    - /bin/cp index.html engine.js icons.js "${DEPLOYPATH:?only the main branch deploys}"
+    - /bin/cp -R templates "${DEPLOYPATH:?only the main branch deploys}"
+    - /bin/cp -R assets "${DEPLOYPATH:?only the main branch deploys}"

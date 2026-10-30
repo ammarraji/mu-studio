@@ -30,7 +30,11 @@ Social icons: Simple Icons (CC0), in `icons.js`.
 
 Live at https://mu.isma.org.my (cPanel, folder `/public_html/mu.isma.org.my`).
 
+Before a release, bump `VERSION` and the `?v=` on the script tags in `index.html` together, so phones load the new files.
+
 Updates go through cPanel's **Git Version Control**: push to GitHub, then in cPanel open the repository, click **Update from Remote**, then **Deploy HEAD Commit**. `.cpanel.yml` copies the app files into the site folder.
+
+Staging is local: review changes on http://localhost:5082 (it shows a "Local" marker) before they are pushed to `main`. `.cpanel.yml` only deploys the `main` branch.
 
 ## Run it locally
 

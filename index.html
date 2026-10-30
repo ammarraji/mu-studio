@@ -28,6 +28,9 @@ button{cursor:pointer}
 [hidden]{display:none !important}
 svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
+/* ---------- environment marker (staging and local only) ---------- */
+.envpill{position:fixed;left:10px;bottom:10px;z-index:80;pointer-events:none;background:var(--yellow);color:var(--navy);font-weight:700;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:999px;box-shadow:0 2px 8px rgba(16,24,40,.18)}
+
 /* ---------- buttons ---------- */
 .pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--line-2);background:#fff;font-weight:600;font-size:14px;white-space:nowrap}
 .pill.primary{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 8px 20px -10px rgba(27,50,95,.7)}
@@ -49,9 +52,9 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .steps3{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .steps3 span{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 6px}
 .steps3 b{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;display:inline-flex;align-items:center;justify-content:center}
-.sect{display:flex;align-items:baseline;justify-content:space-between;margin:10px 0 14px}
+.sect{display:flex;align-items:center;gap:10px;margin:10px 0 14px}
 .sect h2{font-size:18px;margin:0;font-weight:700;letter-spacing:-.01em}
-.sect small{color:var(--muted);font-size:13px}
+.sect small{color:var(--muted);font-size:12.5px;font-weight:600;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
 .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
 .tcard{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;transition:transform .18s ease,box-shadow .18s ease}
 .tcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
@@ -63,7 +66,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .tcard .go{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:inline-flex;align-items:center;justify-content:center}
 .tcard.soon{opacity:.55;pointer-events:none}
 .tcard.soon .thumb{display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,#ecebe6 0 12px,#f3f2ee 12px 24px);color:var(--muted);font-weight:600;font-size:13px}
-.foot{margin-top:40px;text-align:center;color:var(--muted);font-size:12.5px}
+.sitefoot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 16px;margin-top:48px;padding:18px 0 4px;border-top:1px solid var(--line-2);color:var(--muted);font-size:13px}
+.sitefoot b{color:var(--ink);font-weight:600}
 
 /* ---------- editor ---------- */
 .ebar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;height:var(--bar);padding:0 16px;background:rgba(245,244,240,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -80,13 +84,14 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .zoomnote{position:absolute;left:16px;bottom:12px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.8);border-radius:999px;padding:4px 10px}
 .panel{display:flex;flex-direction:column;min-height:0;background:#fff;border-left:1px solid var(--line)}
 .grab{display:none}
-.tabs{display:flex;gap:4px;padding:12px 14px 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none;flex-shrink:0}
-.tabs::-webkit-scrollbar{display:none}
-.tab{position:relative;border:0;background:none;padding:10px 12px 12px;font-weight:600;font-size:13.5px;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+/* steps: equal columns so every step fits at any width; label wraps to 2 lines */
+.tabs{display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:2px;padding:10px 10px 0;border-bottom:1px solid var(--line);flex-shrink:0}
+.tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;border:0;background:none;padding:6px 2px 10px;font-weight:600;font-size:11.5px;line-height:1.25;color:var(--muted);text-align:center;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab .lbl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:100%}
 .tab[aria-selected=true]{color:var(--navy);border-bottom-color:var(--navy)}
-.tab .n{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:var(--soft);font-size:11px;margin-right:6px;color:var(--muted)}
+.tab .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--soft);font-size:12px;color:var(--muted);flex-shrink:0}
 .tab[aria-selected=true] .n{background:var(--navy);color:#fff}
-.tab.warn::after{content:"";position:absolute;top:8px;right:4px;width:7px;height:7px;border-radius:50%;background:#e0a800}
+.tab.warn::after{content:"";position:absolute;top:4px;left:calc(50% + 10px);width:8px;height:8px;border-radius:50%;background:#e0a800;box-shadow:0 0 0 2px #fff}
 .body{flex:1;overflow:auto;padding:18px 18px 8px}
 .body .lead{font-size:13px;color:var(--muted);margin:0 0 12px}
 .group{background:#fff;border:1px solid var(--line);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
@@ -144,7 +149,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
   .zoomnote{display:none}
   .panel{flex:1;border-left:0;border-radius:22px 22px 0 0;margin-top:-18px;position:relative;z-index:2;box-shadow:0 -10px 30px rgba(16,24,40,.10)}
   .grab{display:block;width:40px;height:5px;border-radius:99px;background:#d6d8dd;margin:9px auto 0}
-  .tabs{padding:4px 10px 0}
+  .tabs{padding:4px 6px 0}
   .body{padding:14px 14px 8px}
   .f input[type=text],.f input[type=tel],.f input[type=date],.f textarea,.f select{font-size:16px}
   .ebar .pill.primary{min-height:38px;padding:0 14px}
@@ -152,6 +157,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
   .ebar .short{display:inline}
   .foot-ed .ghost{padding:0 10px}
   .dlg{align-items:flex-end;padding:0}
+  .envpill{bottom:calc(80px + env(safe-area-inset-bottom))}
   .dlg-card{border-radius:24px 24px 0 0;width:100%;padding-bottom:calc(22px + env(safe-area-inset-bottom))}
 }
 </style>
@@ -166,6 +172,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
 </svg>
 
+<div class="envpill" id="envpill" hidden></div>
+
 <!-- ===== Home: pick a template ===== -->
 <div id="v-home">
   <header class="hbar"><img src="assets/mu-logo-horizontal.png" alt="Murabbi Ummah"><span class="tagline">Studio Poster</span></header>
@@ -177,7 +185,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
     </section>
     <div class="sect"><h2>Templat</h2><small id="tcount"></small></div>
     <div class="tgrid" id="tgrid"></div>
-    <p class="foot">Unit Imej dan Penjenamaan ISMA · <span id="ver"></span></p>
+    <footer class="sitefoot"><b>Unit Imej dan Penjenamaan ISMA</b><span id="ver"></span></footer>
   </main>
 </div>
 
@@ -220,13 +228,16 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
   </div>
 </div>
 
-<script src="icons.js"></script>
-<script src="engine.js"></script>
-<script src="templates/program.js"></script>
-<script src="templates/profil.js"></script>
+<!-- ?v= matches VERSION below: bump both on every release so phones never mix old and new files -->
+<script src="icons.js?v=1.2"></script>
+<script src="engine.js?v=1.2"></script>
+<script src="templates/program.js?v=1.2"></script>
+<script src="templates/profil.js?v=1.2"></script>
 <script>
 /* ---------- state ---------- */
-const VERSION = "1.1 · 30 Okt 2026";   // bump on every release, so the live version is visible on the home page
+const VERSION = "1.2 · 30 Okt 2026";   // also bump the ?v= on the script tags
+// staging site and local preview show a marker, so they are never mistaken for the live site
+const ENV = /staging/.test(location.hostname) ? "Staging" : /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? "Local" : "";   // bump on every release, so the live version is visible on the home page
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -245,7 +256,7 @@ const imgsFor = (id) => Object.assign({}, STATIC, { masjid: IMGS.masjid, photo: 
 function tabsOf(t) {
   const out = [];
   for (const f of t.fields) {
-    if (f.type === "section") out.push({ title: f.title, note: f.note, fields: [] });
+    if (f.type === "section") out.push({ title: f.title, tab: f.tab || f.title, note: f.note, fields: [] });
     else out[out.length - 1].fields.push(f);
   }
   return out;
@@ -306,11 +317,12 @@ function field(f) {
 }
 function renderTabs() {
   const tabs = tabsOf(T);
-  $("#tabs").innerHTML = tabs.map((t, i) => `<button class="tab" role="tab" type="button" data-tab="${i}" aria-selected="${i === tab}"><span class="n">${i + 1}</span>${esc(t.title)}</button>`).join("");
+  $("#tabs").style.setProperty("--n", tabs.length);
+  $("#tabs").innerHTML = tabs.map((t, i) => `<button class="tab" role="tab" type="button" data-tab="${i}" aria-selected="${i === tab}"><span class="n">${i + 1}</span><span class="lbl">${esc(t.tab)}</span></button>`).join("");
   const cur = tabs[tab];
   $("#body").innerHTML = (cur.note ? `<p class="lead">${esc(cur.note)}</p>` : "") + `<div class="group">${cur.fields.map(field).join("")}</div>`;
   const last = tab === tabs.length - 1;
-  $("#next").innerHTML = last ? `<svg class="i"><use href="#i-down"/></svg><span>Muat turun poster</span>` : `<span>Seterusnya: ${esc(tabs[tab + 1].title)}</span><svg class="i"><use href="#i-next"/></svg>`;
+  $("#next").innerHTML = last ? `<svg class="i"><use href="#i-down"/></svg><span>Muat turun poster</span>` : `<span>Seterusnya: ${esc(tabs[tab + 1].tab)}</span><svg class="i"><use href="#i-next"/></svg>`;
   $("#next").dataset.last = last ? "1" : "";
   updateHints();
 }
@@ -344,12 +356,12 @@ function route() {
     S = Object.assign(clone(T.empty), store.get(id) || clone(T.sample));
     $("#v-home").hidden = true; $("#v-edit").hidden = false;
     $("#e-title").textContent = T.name;
-    document.title = T.name + " · Murabbi Ummah";
+    document.title = (ENV ? "[" + ENV + "] " : "") + T.name + " · Murabbi Ummah";
     renderTabs(); render();
   } else {
     tplId = null; T = null;
     $("#v-edit").hidden = true; $("#v-home").hidden = false;
-    document.title = "Studio Poster · Murabbi Ummah";
+    document.title = (ENV ? "[" + ENV + "] " : "") + "Studio Poster · Murabbi Ummah";
     renderHome();
   }
   window.scrollTo(0, 0);
@@ -442,7 +454,8 @@ async function share() {
     loadImg("assets/mu-logo-horizontal-on-navy.png"), loadImg("assets/mu-mark.png"), loadImg("assets/logo-isma.png")]);
   Object.assign(STATIC, { muLogo, muMark, isma });
   try { await Promise.all(['400 40px "Krona One"', "400 24px Inter", "600 24px Inter", "700 24px Inter"].map((f) => document.fonts.load(f))); } catch {}
-  $("#ver").textContent = "Versi " + VERSION;
+  $("#ver").textContent = "Versi " + VERSION + (ENV ? " · " + ENV : "");
+  if (ENV) { $("#envpill").textContent = ENV; $("#envpill").hidden = false; }
   window.addEventListener("hashchange", route);
   route();
   document.fonts.ready.then(() => (T ? render() : renderHome()));

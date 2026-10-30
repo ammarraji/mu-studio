@@ -15,7 +15,7 @@ TEMPLATES.profil = {
     { type: "textarea", id: "pendidikan", label: "Pendidikan", rows: 6, ph: "Graduan Universiti Malaya\n- Master Pendidikan Islam" },
     { type: "textarea", id: "kemahiran", label: "Kemahiran", rows: 4, ph: "Sirah\nTafsir al-Quran" },
     { type: "textarea", id: "jawatan", label: "Jawatan di komuniti", opt: true, rows: 3, ph: "Pengerusi Surau al-Munawwarah, Bangi" },
-    { type: "section", title: "Tawaran pada komuniti", note: "Sehingga 3 kelas atau khidmat. Kosongkan jika tiada." },
+    { type: "section", title: "Tawaran pada komuniti", tab: "Tawaran", note: "Sehingga 3 kelas atau khidmat. Kosongkan jika tiada." },
     { type: "offer", id: "tawaran", count: 3, icons: TAWARAN_ICONS },
   ].concat(CONTACT_FIELDS),
   sample: {
