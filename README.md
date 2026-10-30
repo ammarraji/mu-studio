@@ -8,6 +8,8 @@ Fill in the details, and the poster appears in the Murabbi Ummah design; downloa
 |---|---|---|
 | Poster program | `templates/program.js` | Programme type, title, series, speaker with photo, date, time, venue |
 | Profil murabbi | `templates/profil.js` | Murabbi with photo, branch, education and skills lists, community roles, up to 3 offerings |
+| Jadual ceramah | `templates/jadual.js` | Speaker with photo, month, and a table of up to 8 programmes (date, time, place, programme); the day is worked out from the date |
+| Kata-kata hikmah | `templates/hikmah.js` | A short quote, large and centred, with an optional speaker and an optional background photo under a navy wash |
 
 Each template file lists its form fields (`fields`), sample content (`sample`), and a `draw` function that lays out the poster with the shared helpers in `engine.js`. To add a template, copy one, change the fields and the drawing, and add a `<script>` line in `index.html`.
 

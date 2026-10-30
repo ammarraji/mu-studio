@@ -21,6 +21,19 @@ function loadImg(src) {
   return new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
 }
 const upper = (t) => (t || "").toLocaleUpperCase("ms");
+const BULAN_PENDEK = ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogos", "Sep", "Okt", "Nov", "Dis"];
+// "2026-02-02" -> "2 Feb (Isnin)"
+function tarikhPendek(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+  if (!m) return "";
+  const d = new Date(+m[1], +m[2] - 1, +m[3]);
+  return `${d.getDate()} ${BULAN_PENDEK[d.getMonth()]} (${HARI[d.getDay()]})`;
+}
+// "2026-02-02" -> "Februari 2026"
+function bulanTahun(iso) {
+  const m = /^(\d{4})-(\d{2})/.exec(iso || "");
+  return m ? `${BULAN[+m[2] - 1]} ${m[1]}` : "";
+}
 
 /* ---------- canvas ---------- */
 const cv = document.getElementById("poster");
@@ -162,8 +175,22 @@ function drawPhotoBox(img, S, key, x, y, w, h) {
   }
   ctx.restore();
 }
-// footer: social accounts left, phone right
+// form fields most templates share
 const SOSIAL = [["facebook", "Facebook"], ["telegram", "Telegram"], ["instagram", "Instagram"], ["x", "X"], ["tiktok", "TikTok"]];
+const LOGO_FIELDS = [
+  { type: "section", title: "Logo rakan" },
+  { type: "check", id: "isma", label: "Logo ISMA" },
+  { type: "image", id: "masjid", label: "Logo masjid atau penganjur", opt: true, contain: true },
+];
+const HUBUNGI_FIELDS = [
+  { type: "section", title: "Hubungi" },
+  { type: "multi", id: "sosial", label: "Akaun media sosial", opt: true, options: SOSIAL },
+  { type: "text", id: "akaun", ph: "cth. murabbiummah" },
+  { type: "text", id: "telefon", label: "No. telefon", opt: true, ph: "cth. 012-345 6789", input: "tel" },
+];
+const CONTACT_FIELDS = LOGO_FIELDS.concat(HUBUNGI_FIELDS);
+
+// footer: social accounts left, phone right
 function drawFooter(S) {
   const fY = FOOTER_Y, fH = H - fY, cy = fY + fH / 2;
   ctx.fillStyle = BRAND.navyDeep; ctx.fillRect(0, fY, W, fH);

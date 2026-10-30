@@ -1,14 +1,4 @@
 // Poster program: ceramah, kuliah, kelas, tuisyen.
-const CONTACT_FIELDS = [
-  { type: "section", title: "Logo rakan" },
-  { type: "check", id: "isma", label: "Logo ISMA" },
-  { type: "image", id: "masjid", label: "Logo masjid atau penganjur", opt: true, contain: true },
-  { type: "section", title: "Hubungi" },
-  { type: "multi", id: "sosial", label: "Akaun media sosial", opt: true, options: SOSIAL },
-  { type: "text", id: "akaun", ph: "cth. murabbiummah" },
-  { type: "text", id: "telefon", label: "No. telefon", opt: true, ph: "cth. 012-345 6789", input: "tel" },
-];
-
 TEMPLATES.program = {
   name: "Poster program",
   short: "Program",

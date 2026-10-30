@@ -122,10 +122,16 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .drop .acts{flex:1;display:flex;flex-direction:column;gap:6px}
 .drop label.pick{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1.5px dashed var(--line-2);border-radius:12px;font-weight:600;font-size:13.5px;cursor:pointer;background:#fbfbfa;color:var(--navy)}
 .drop label.pick input{display:none}
-.drop .rm{align-self:flex-start;border:0;background:none;color:var(--muted);font-size:12.5px;padding:2px 0}
+.rm{border:0;background:none;color:var(--muted);font-size:12.5px;padding:2px 0;text-decoration:underline;text-underline-offset:2px}
+.drop .rm{align-self:flex-start}
 .sl{display:grid;grid-template-columns:86px 1fr;gap:8px 12px;align-items:center;font-size:12.5px;color:var(--muted);margin-top:12px}
 .sl input{width:100%;accent-color:var(--navy)}
 .offer{display:grid;grid-template-columns:132px 1fr;gap:8px;margin-bottom:8px}
+.trow{border:1px solid var(--line);border-radius:12px;padding:10px 10px 4px;margin-bottom:10px;background:#fbfbfa}
+.trow-h{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.trow input{margin-bottom:8px;background:#fff !important}
+.tgrid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.trow .hint{margin:-2px 0 8px}
 .offer:last-child{margin-bottom:0}
 .foot-ed{display:flex;gap:8px;padding:12px 18px max(12px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff;flex-shrink:0}
 .foot-ed .pill.primary{flex:1;min-width:0}
@@ -149,7 +155,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
   .zoomnote{display:none}
   .panel{flex:1;border-left:0;border-radius:22px 22px 0 0;margin-top:-18px;position:relative;z-index:2;box-shadow:0 -10px 30px rgba(16,24,40,.10)}
   .grab{display:block;width:40px;height:5px;border-radius:99px;background:#d6d8dd;margin:9px auto 0}
-  .tabs{padding:4px 6px 0}
+  .tabs{padding:4px 4px 0;gap:0}
+  .tab{font-size:11px;padding:6px 0 10px}
   .body{padding:14px 14px 8px}
   .f input[type=text],.f input[type=tel],.f input[type=date],.f textarea,.f select{font-size:16px}
   .ebar .pill.primary{min-height:38px;padding:0 14px}
@@ -170,6 +177,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
   <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M6 12.5v6A1.5 1.5 0 0 0 7.5 20h9a1.5 1.5 0 0 0 1.5-1.5v-6"/></symbol>
   <symbol id="i-img" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m4.5 17.5 5-4.5 3.5 3 2.5-2 4 3.5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
 </svg>
 
 <div class="envpill" id="envpill" hidden></div>
@@ -229,13 +237,15 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 </div>
 
 <!-- ?v= matches VERSION below: bump both on every release so phones never mix old and new files -->
-<script src="icons.js?v=1.3"></script>
-<script src="engine.js?v=1.3"></script>
-<script src="templates/program.js?v=1.3"></script>
-<script src="templates/profil.js?v=1.3"></script>
+<script src="icons.js?v=1.4"></script>
+<script src="engine.js?v=1.4"></script>
+<script src="templates/program.js?v=1.4"></script>
+<script src="templates/jadual.js?v=1.4"></script>
+<script src="templates/profil.js?v=1.4"></script>
+<script src="templates/hikmah.js?v=1.4"></script>
 <script>
 /* ---------- state ---------- */
-const VERSION = "1.3 · 30 Okt 2026";   // also bump the ?v= on the script tags
+const VERSION = "1.4 · 30 Okt 2026";   // also bump the ?v= on the script tags
 // staging site and local preview show a marker, so they are never mistaken for the live site
 const ENV = /staging/.test(location.hostname) ? "Staging" : /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? "Local" : "";   // bump on every release, so the live version is visible on the home page
 const $ = (s) => document.querySelector(s);
@@ -243,14 +253,16 @@ const $$ = (s) => [...document.querySelectorAll(s)];
 const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const clone = (o) => JSON.parse(JSON.stringify(o));
 const STATIC = { muLogo: null, muMark: null, isma: null };
-const IMGS = { masjid: null, photo: {} };          // uploads live in memory only
+const IMGS = { masjid: null, byTpl: {} };          // uploads live in memory only; masjid logo is shared
 let tplId = null, T = null, S = {}, tab = 0, lastBlob = null, lastName = "";
 
 const store = {
   get(id) { try { return JSON.parse(localStorage.getItem("mu:" + id) || "null"); } catch { return null; } },
   set(id, v) { try { localStorage.setItem("mu:" + id, JSON.stringify(v)); } catch {} },
 };
-const imgsFor = (id) => Object.assign({}, STATIC, { masjid: IMGS.masjid, photo: IMGS.photo[id] || null });
+const imgsFor = (id) => Object.assign({}, STATIC, { masjid: IMGS.masjid }, IMGS.byTpl[id] || {});
+const getImg = (key) => key === "masjid" ? IMGS.masjid : (IMGS.byTpl[tplId] || {})[key] || null;
+const setImg = (key, img) => { if (key === "masjid") IMGS.masjid = img; else (IMGS.byTpl[tplId] = IMGS.byTpl[tplId] || {})[key] = img; };
 
 // split a template's fields into tabs at each section
 function tabsOf(t) {
@@ -270,8 +282,7 @@ function renderHome() {
     <a class="tcard" href="#${id}">
       <div class="thumb"><img data-thumb="${id}" alt="Contoh ${esc(TEMPLATES[id].name)}"></div>
       <div class="meta"><div><b>${esc(TEMPLATES[id].name)}</b><small>Instagram, Facebook, WhatsApp · 4:5</small></div><span class="go"><svg class="i"><use href="#i-next"/></svg></span></div>
-    </a>`).join("") + `
-    <div class="tcard soon"><div class="thumb">Templat seterusnya</div><div class="meta"><div><b>Akan datang</b><small>Beritahu kami apa yang anda perlukan</small></div></div></div>`;
+    </a>`).join("");
   // thumbnails are drawn live from each template's sample, so they always match the real output
   for (const id of ids) {
     TEMPLATES[id].draw(clone(TEMPLATES[id].sample), Object.assign({}, STATIC, { masjid: null, photo: null }));
@@ -298,7 +309,7 @@ function field(f) {
     case "multi":
       return `<div class="f">${lab}<div class="chips" style="margin:0">${f.options.map(([k, l]) => `<button type="button" class="chip" data-multi="${f.id}" data-v="${k}" aria-pressed="${(v || []).includes(k)}">${esc(l)}</button>`).join("")}</div></div>`;
     case "image": {
-      const has = f.id === "masjid" ? IMGS.masjid : IMGS.photo[tplId];
+      const has = getImg(f.id);
       const sliders = f.sliders && has ? `<div class="sl">
           <span>Zum</span><input type="range" min="1" max="2.5" step="0.01" value="${S[f.id + "Zoom"] ?? 1}" data-s="${f.id}Zoom">
           <span>Kiri–kanan</span><input type="range" min="-1" max="1" step="0.01" value="${S[f.id + "X"] ?? 0}" data-s="${f.id}X">
@@ -312,6 +323,16 @@ function field(f) {
       return `<div class="f">${(v || []).map((o, i) => `<div class="offer">
           <select data-offer-icon="${i}" aria-label="Ikon tawaran ${i + 1}">${f.icons.map(([k, l]) => `<option value="${k}" ${o.icon === k ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>
           <input type="text" data-offer-text="${i}" value="${esc(o.text)}" placeholder="Tawaran ${i + 1}" autocomplete="off"></div>`).join("")}<span class="hint" data-hint="tawaran"></span></div>`;
+    case "table": {
+      const rows = v || [], cell = (i, r, k, ph, type) => `<input type="${type || "text"}" data-row="${f.id}" data-i="${i}" data-c="${k}" value="${esc(r[k])}" placeholder="${esc(ph)}" aria-label="${esc(ph)} baris ${i + 1}" autocomplete="off">`;
+      return `<div class="f">${rows.map((r, i) => `<div class="trow">
+          <div class="trow-h"><b>Baris ${i + 1}</b>${rows.length > 1 ? `<button type="button" class="rm" data-row-del="${f.id}" data-i="${i}">Buang</button>` : ""}</div>
+          <div class="tgrid2">${cell(i, r, "tarikh", "Tarikh", "date")}${cell(i, r, "masa", "Masa, cth. 8.00 pagi")}</div>
+          ${cell(i, r, "tempat", "Tempat")}${cell(i, r, "program", "Program")}
+          ${r.tarikh ? `<span class="hint">Di poster: ${esc(tarikhPendek(r.tarikh))}</span>` : ""}</div>`).join("")}
+        ${rows.length < f.max ? `<button type="button" class="pill block" data-row-add="${f.id}"><svg class="i"><use href="#i-plus"/></svg>Tambah baris</button>` : `<span class="hint">Maksimum ${f.max} baris.</span>`}
+        <span class="hint" data-hint="${f.id}"></span></div>`;
+    }
   }
   return "";
 }
@@ -374,6 +395,7 @@ document.addEventListener("input", (e) => {
   if (d.f) S[d.f] = e.target.value;
   else if (d.s) S[d.s] = +e.target.value;
   else if (d.offerText != null) S.tawaran[+d.offerText].text = e.target.value;
+  else if (d.row) S[d.row][+d.i][d.c] = e.target.value;
   else return;
   if (d.f) $$(`[data-choice="${d.f}"]`).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === S[d.f])));
   changed();
@@ -383,13 +405,14 @@ document.addEventListener("change", (e) => {
   const d = e.target.dataset;
   if (d.t) { S[d.t] = e.target.checked; changed(); return; }
   if (d.offerIcon != null) { S.tawaran[+d.offerIcon].icon = e.target.value; changed(); return; }
+  if (d.row && d.c === "tarikh") { renderTabs(); return; }   // refresh the "Di poster" day under the row
   if (d.img) {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
     const url = URL.createObjectURL(file);
     loadImg(url).then((img) => {
       if (!img) { alert("Gambar tidak dapat dibuka. Cuba fail JPG atau PNG."); return; }
-      if (d.img === "masjid") IMGS.masjid = img; else IMGS.photo[tplId] = img;
+      setImg(d.img, img);
       renderTabs(); changed();
     });
   }
@@ -405,8 +428,12 @@ document.addEventListener("click", (e) => {
     S[m.dataset.multi] = list.includes(k) ? list.filter((x) => x !== k) : list.concat(k);
     m.setAttribute("aria-pressed", String(S[m.dataset.multi].includes(k))); changed(); return;
   }
+  const ra = e.target.closest("[data-row-add]");
+  if (ra) { const f = T.fields.find((x) => x.id === ra.dataset.rowAdd); (S[f.id] = S[f.id] || []).push(f.blank()); renderTabs(); changed(); return; }
+  const rd = e.target.closest("[data-row-del]");
+  if (rd) { S[rd.dataset.rowDel].splice(+rd.dataset.i, 1); renderTabs(); changed(); return; }
   const r = e.target.closest("[data-rm]");
-  if (r) { if (r.dataset.rm === "masjid") IMGS.masjid = null; else delete IMGS.photo[tplId]; renderTabs(); changed(); return; }
+  if (r) { setImg(r.dataset.rm, null); renderTabs(); changed(); return; }
   if (e.target.closest("[data-download]")) { download(); return; }
   if (e.target.closest("#next")) {
     if ($("#next").dataset.last) download();
@@ -415,7 +442,7 @@ document.addEventListener("click", (e) => {
   }
   if (e.target.closest("#reset")) {
     if (!confirm("Kosongkan semua maklumat untuk templat ini?")) return;
-    S = clone(T.empty); delete IMGS.photo[tplId]; tab = 0; store.set(tplId, S); renderTabs(); render(); return;
+    S = clone(T.empty); delete IMGS.byTpl[tplId]; tab = 0; store.set(tplId, S); renderTabs(); render(); return;
   }
   if (e.target.closest("#close-done") || e.target.id === "done") { $("#done").hidden = true; return; }
   if (e.target.closest("#again")) { save(lastBlob, lastName); return; }
