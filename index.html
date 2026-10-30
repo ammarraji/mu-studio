@@ -177,7 +177,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
     </section>
     <div class="sect"><h2>Templat</h2><small id="tcount"></small></div>
     <div class="tgrid" id="tgrid"></div>
-    <p class="foot">Unit Imej dan Penjenamaan ISMA</p>
+    <p class="foot">Unit Imej dan Penjenamaan ISMA · <span id="ver"></span></p>
   </main>
 </div>
 
@@ -226,6 +226,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 <script src="templates/profil.js"></script>
 <script>
 /* ---------- state ---------- */
+const VERSION = "1.1 · 30 Okt 2026";   // bump on every release, so the live version is visible on the home page
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -441,6 +442,7 @@ async function share() {
     loadImg("assets/mu-logo-horizontal-on-navy.png"), loadImg("assets/mu-mark.png"), loadImg("assets/logo-isma.png")]);
   Object.assign(STATIC, { muLogo, muMark, isma });
   try { await Promise.all(['400 40px "Krona One"', "400 24px Inter", "600 24px Inter", "700 24px Inter"].map((f) => document.fonts.load(f))); } catch {}
+  $("#ver").textContent = "Versi " + VERSION;
   window.addEventListener("hashchange", route);
   route();
   document.fonts.ready.then(() => (T ? render() : renderHome()));
