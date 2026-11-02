@@ -18,7 +18,10 @@ Each template file lists its form fields (`fields`), sample content (`sample`), 
 - `index.html`: the app. Home lists the templates with live thumbnails; the editor shows the poster beside a tabbed form (one tab per section), steps through with "Seterusnya", flags text that doesn't fit, and downloads or shares the PNG.
 - `engine.js`: canvas helpers shared by all templates: text that shrinks to fit (and reports when it can't), photo in a white box with zoom and position, header logos, footer, bullet lists, Malay dates with the correct weekday.
 - Text stays readable: list text never goes below 18 px on the 1080 px poster; anything longer is flagged before download.
-- What people type is saved in their browser (per template). Uploaded photos stay in memory only and are never sent anywhere.
+- **Poster saya:** every poster saves itself as you type, photos included, in the browser's own database (IndexedDB, `store.js`). Home lists them with thumbnails; Salin duplicates, Padam deletes. Starting from a template always makes a new poster. Nothing is sent anywhere, and posters stay on that device and browser only.
+- Photos are resized on upload (long side 1800 px) so many posters fit.
+- On iPhone, adding the site to the Home Screen (`manifest.webmanifest`, `assets/icon-*.png`) keeps Safari from clearing saved posters after a period of not visiting.
+- Phones get two modes: **Isi maklumat** (the form fills the screen) and **Lihat poster** (big preview), switched from the bottom bar.
 
 ## Brand
 

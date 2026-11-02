@@ -7,6 +7,6 @@ deployment:
   tasks:
     - export BRANCH=$(git rev-parse --abbrev-ref HEAD)
     - if [ "$BRANCH" = "main" ]; then export DEPLOYPATH=/home/ismaweb/public_html/mu.isma.org.my/; else export DEPLOYPATH=; fi
-    - /bin/cp index.html engine.js icons.js "${DEPLOYPATH:?only the main branch deploys}"
+    - /bin/cp index.html engine.js icons.js store.js manifest.webmanifest "${DEPLOYPATH:?only the main branch deploys}"
     - /bin/cp -R templates "${DEPLOYPATH:?only the main branch deploys}"
     - /bin/cp -R assets "${DEPLOYPATH:?only the main branch deploys}"

@@ -6,8 +6,12 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#F5F4F0">
 <meta name="color-scheme" content="light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Poster MU">
 <title>Studio Poster · Murabbi Ummah</title>
 <link rel="icon" href="assets/mu-logo-vertical.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Krona+One&display=swap" rel="stylesheet">
@@ -16,9 +20,9 @@
   --navy:#1B325F; --navy-2:#24407a; --yellow:#E9A742; --yellow-soft:#FBEFD9;
   --bg:#F5F4F0; --card:#fff; --ink:#16213A; --muted:#5d6676;
   --line:rgba(27,50,95,.10); --line-2:rgba(27,50,95,.16); --soft:rgba(27,50,95,.05);
-  --warn:#a15c00; --warn-soft:#fdf0dd; --ok:#1f7a4a;
+  --warn:#a15c00; --warn-soft:#fdf0dd; --ok:#1f7a4a; --ok-soft:#e6f4ea;
   --r:16px; --shadow:0 1px 2px rgba(16,24,40,.05),0 12px 32px rgba(16,24,40,.08);
-  --bar:60px;
+  --bar:60px; --modebar:72px;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -28,17 +32,19 @@ button{cursor:pointer}
 [hidden]{display:none !important}
 svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
-/* ---------- environment marker (staging and local only) ---------- */
+/* ---------- environment marker (local only) ---------- */
 .envpill{position:fixed;left:10px;bottom:10px;z-index:80;pointer-events:none;background:var(--yellow);color:var(--navy);font-weight:700;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:999px;box-shadow:0 2px 8px rgba(16,24,40,.18)}
 
 /* ---------- buttons ---------- */
-.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--line-2);background:#fff;font-weight:600;font-size:14px;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--line-2);background:#fff;font-weight:600;font-size:14px;white-space:nowrap;text-decoration:none;color:var(--ink)}
 .pill.primary{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 8px 20px -10px rgba(27,50,95,.7)}
 .pill.primary:hover{background:var(--navy-2)}
 .pill.ghost{background:transparent;border-color:transparent;color:var(--muted)}
-.pill.block{width:100%;min-height:50px;font-size:15px}
+.pill.block{width:100%;min-height:52px;font-size:15.5px}
+.pill.block span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .circle{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#fff;border:1px solid var(--line);color:var(--navy);flex-shrink:0}
 .pill:active,.circle:active{transform:scale(.98)}
+.linkbtn{border:0;background:none;color:var(--muted);font-size:13px;padding:8px 4px;text-decoration:underline;text-underline-offset:3px}
 
 /* ---------- home ---------- */
 .hbar{display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 max(20px,env(safe-area-inset-left));max-width:1180px;margin:0 auto}
@@ -55,6 +61,18 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .sect{display:flex;align-items:center;gap:10px;margin:10px 0 14px}
 .sect h2{font-size:18px;margin:0;font-weight:700;letter-spacing:-.01em}
 .sect small{color:var(--muted);font-size:12.5px;font-weight:600;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.mine{margin-bottom:34px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.mcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:8px;display:flex;flex-direction:column}
+.mcard a{text-decoration:none;color:inherit;display:block}
+.mcard .thumb{aspect-ratio:4/5;border-radius:10px;overflow:hidden;background:var(--navy)}
+.mcard .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.mcard b{display:block;font-size:14px;margin:9px 4px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mcard small{display:block;color:var(--muted);font-size:12px;margin:1px 4px 0}
+.mcard .acts{display:flex;gap:4px;margin-top:6px;padding:0 0 0 2px}
+.mcard .acts button{border:0;background:none;color:var(--navy);font-size:12.5px;font-weight:600;padding:6px 6px}
+.mcard .acts button.del{color:var(--muted);margin-left:auto}
+.nostore{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:12px;padding:10px 12px;margin:0 0 14px}
 .tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
 .tcard{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;transition:transform .18s ease,box-shadow .18s ease}
 .tcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
@@ -63,37 +81,36 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .tcard .meta{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 6px 4px}
 .tcard b{display:block;font-size:15.5px}
 .tcard small{display:block;color:var(--muted);font-size:13px}
-.tcard .go{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:inline-flex;align-items:center;justify-content:center}
-.tcard.soon{opacity:.55;pointer-events:none}
-.tcard.soon .thumb{display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,#ecebe6 0 12px,#f3f2ee 12px 24px);color:var(--muted);font-weight:600;font-size:13px}
+.tcard .go{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
 .sitefoot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 16px;margin-top:48px;padding:18px 0 4px;border-top:1px solid var(--line-2);color:var(--muted);font-size:13px}
 .sitefoot b{color:var(--ink);font-weight:600}
 
 /* ---------- editor ---------- */
-.ebar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;height:var(--bar);padding:0 16px;background:rgba(245,244,240,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.ebar .t b{display:block;font-size:15px;line-height:1.2}
-.ebar .t small{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
-.ebar .t small i{width:7px;height:7px;border-radius:50%;background:#9db3a5;display:inline-block}
-.ebar .t small.on i{background:var(--ok)}
-.ebar .right{margin-left:auto;display:flex;gap:8px}
+.ebar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;height:var(--bar);padding:0 16px;background:rgba(245,244,240,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .ebar .t{min-width:0}
-.ebar .short{display:none}
+.ebar .t b{display:block;font-size:15px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ebar .t small{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.ebar .t small i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block}
+.ebar .t small.busy i{background:#c9a24a}
+.ebar .right{margin-left:auto;display:flex;gap:8px}
 .ed{display:grid;grid-template-columns:minmax(0,1fr) 460px;height:calc(100dvh - var(--bar))}
 .stage{position:relative;display:flex;align-items:center;justify-content:center;padding:28px;background:#ebe9e3 radial-gradient(rgba(27,50,95,.12) 1px,transparent 1px) 0 0/18px 18px;overflow:hidden}
 #poster{display:block;height:min(100%,calc((100vw - 460px - 56px) * 1.25));width:auto;max-width:100%;aspect-ratio:4/5;border-radius:6px;box-shadow:0 2px 4px rgba(16,24,40,.08),0 24px 60px rgba(16,24,40,.18);background:var(--navy)}
 .zoomnote{position:absolute;left:16px;bottom:12px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.8);border-radius:999px;padding:4px 10px}
 .panel{display:flex;flex-direction:column;min-height:0;background:#fff;border-left:1px solid var(--line)}
-.grab{display:none}
 /* steps: equal columns so every step fits at any width; label wraps to 2 lines */
-.tabs{display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:2px;padding:10px 10px 0;border-bottom:1px solid var(--line);flex-shrink:0}
+.tabs{display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:2px;padding:10px 10px 0;border-bottom:1px solid var(--line);flex-shrink:0;background:#fff}
 .tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;border:0;background:none;padding:6px 2px 10px;font-weight:600;font-size:11.5px;line-height:1.25;color:var(--muted);text-align:center;border-bottom:2px solid transparent;margin-bottom:-1px}
 .tab .lbl{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:100%}
 .tab[aria-selected=true]{color:var(--navy);border-bottom-color:var(--navy)}
 .tab .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--soft);font-size:12px;color:var(--muted);flex-shrink:0}
+.tab .n svg.i{width:15px;height:15px;stroke-width:2.6}
+.tab.done .n{background:var(--ok-soft);color:var(--ok)}
 .tab[aria-selected=true] .n{background:var(--navy);color:#fff}
 .tab.warn::after{content:"";position:absolute;top:4px;left:calc(50% + 10px);width:8px;height:8px;border-radius:50%;background:#e0a800;box-shadow:0 0 0 2px #fff}
-.body{flex:1;overflow:auto;padding:18px 18px 8px}
+.body{flex:1;overflow:auto;padding:18px 18px 24px}
 .body .lead{font-size:13px;color:var(--muted);margin:0 0 12px}
+.sample{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--navy);background:var(--yellow-soft);border:1px solid #f1d7a6;border-radius:12px;padding:10px 12px;margin:0 0 12px}
 .group{background:#fff;border:1px solid var(--line);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
 .f{display:block;padding:13px 14px;border-top:1px solid var(--line)}
 .f:first-child{border-top:0}
@@ -120,22 +137,21 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .drop .ph{width:64px;height:64px;border-radius:12px;background:var(--soft) center/cover no-repeat;border:1px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#9aa1ad}
 .drop .ph.contain{background-size:contain;background-color:#fff}
 .drop .acts{flex:1;display:flex;flex-direction:column;gap:6px}
-.drop label.pick{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1.5px dashed var(--line-2);border-radius:12px;font-weight:600;font-size:13.5px;cursor:pointer;background:#fbfbfa;color:var(--navy)}
+.drop label.pick{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:1.5px dashed var(--line-2);border-radius:12px;font-weight:600;font-size:13.5px;cursor:pointer;background:#fbfbfa;color:var(--navy)}
 .drop label.pick input{display:none}
 .rm{border:0;background:none;color:var(--muted);font-size:12.5px;padding:2px 0;text-decoration:underline;text-underline-offset:2px}
 .drop .rm{align-self:flex-start}
 .sl{display:grid;grid-template-columns:86px 1fr;gap:8px 12px;align-items:center;font-size:12.5px;color:var(--muted);margin-top:12px}
 .sl input{width:100%;accent-color:var(--navy)}
 .offer{display:grid;grid-template-columns:132px 1fr;gap:8px;margin-bottom:8px}
+.offer:last-child{margin-bottom:0}
 .trow{border:1px solid var(--line);border-radius:12px;padding:10px 10px 4px;margin-bottom:10px;background:#fbfbfa}
 .trow-h{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);margin-bottom:8px}
 .trow input{margin-bottom:8px;background:#fff !important}
 .tgrid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .trow .hint{margin:-2px 0 8px}
-.offer:last-child{margin-bottom:0}
-.foot-ed{display:flex;gap:8px;padding:12px 18px max(12px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff;flex-shrink:0}
-.foot-ed .pill.primary{flex:1;min-width:0}
-.foot-ed .pill.primary span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nextwrap{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:6px}
+.modebar{display:none}
 
 /* ---------- done dialog ---------- */
 .dlg{position:fixed;inset:0;z-index:60;background:rgba(16,24,40,.42);display:flex;align-items:center;justify-content:center;padding:20px}
@@ -144,32 +160,39 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 .dlg-card h3{font-size:19px;margin:0 0 4px}
 .dlg-card p{font-size:13.5px;color:var(--muted);margin:0 0 18px;word-break:break-all}
 .dlg-card .row{display:flex;flex-direction:column;gap:8px}
-.okmark{width:44px;height:44px;border-radius:50%;background:#e6f4ea;color:var(--ok);display:inline-flex;align-items:center;justify-content:center;margin-bottom:6px}
+.okmark{width:44px;height:44px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:inline-flex;align-items:center;justify-content:center;margin-bottom:6px}
 
-/* ---------- phones ---------- */
+/* ---------- phones: two modes, the form gets the whole screen ---------- */
 @media (max-width:900px){
   :root{--bar:56px}
-  .ed{display:flex;flex-direction:column;height:calc(100dvh - var(--bar))}
-  .stage{flex:0 0 auto;height:40dvh;min-height:230px;padding:14px}
-  #poster{height:100%;width:auto}
-  .zoomnote{display:none}
-  .panel{flex:1;border-left:0;border-radius:22px 22px 0 0;margin-top:-18px;position:relative;z-index:2;box-shadow:0 -10px 30px rgba(16,24,40,.10)}
-  .grab{display:block;width:40px;height:5px;border-radius:99px;background:#d6d8dd;margin:9px auto 0}
-  .tabs{padding:4px 4px 0;gap:0}
+  .ebar{padding:0 12px}
+  .ed{display:block;height:auto}
+  .stage{display:none}
+  .panel{border-left:0;min-height:calc(100dvh - var(--bar))}
+  .tabs{position:sticky;top:var(--bar);z-index:15;padding:4px 4px 0;gap:0}
   .tab{font-size:11px;padding:6px 0 10px}
-  .body{padding:14px 14px 8px}
-  .f input[type=text],.f input[type=tel],.f input[type=date],.f textarea,.f select{font-size:16px}
-  .ebar .pill.primary{min-height:38px;padding:0 14px}
-  .ebar .long{display:none}
-  .ebar .short{display:inline}
-  .foot-ed .ghost{padding:0 10px}
+  .body{overflow:visible;padding:16px 14px calc(var(--modebar) + 28px + env(safe-area-inset-bottom))}
+  .f{padding:14px}
+  .f .l{font-size:13.5px}
+  .f input[type=text],.f input[type=tel],.f input[type=date],.f textarea,.f select{font-size:17px;min-height:52px;padding:12px 14px}
+  .chip{padding:9px 14px;font-size:14px}
+  /* poster mode: big preview, form hidden */
+  #v-edit.view .panel{display:none}
+  #v-edit.view .stage{display:flex;height:calc(100dvh - var(--bar) - var(--modebar) - env(safe-area-inset-bottom));padding:16px}
+  #v-edit.view #poster{height:auto;width:auto;max-height:100%;max-width:100%}
+  .zoomnote{display:none}
+  .modebar{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);padding:10px 12px max(10px,env(safe-area-inset-bottom));height:calc(var(--modebar) + env(safe-area-inset-bottom))}
+  .modebar button{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;border:1px solid var(--line-2);background:#fff;font-weight:700;font-size:14.5px;color:var(--muted)}
+  .modebar button[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+  .modebar canvas{width:30px;height:37.5px;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.25);background:var(--navy)}
+  .envpill{bottom:calc(var(--modebar) + 10px + env(safe-area-inset-bottom))}
   .dlg{align-items:flex-end;padding:0}
-  .envpill{bottom:calc(80px + env(safe-area-inset-bottom))}
   .dlg-card{border-radius:24px 24px 0 0;width:100%;padding-bottom:calc(22px + env(safe-area-inset-bottom))}
 }
 </style>
 </head>
 <body>
+<div class="envpill" id="envpill" hidden></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5.5M11 6l-6 6 6 6"/></symbol>
   <symbol id="i-next" viewBox="0 0 24 24"><path d="M5 12h13.5M13 6l6 6-6 6"/></symbol>
@@ -178,11 +201,10 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
   <symbol id="i-img" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m4.5 17.5 5-4.5 3.5 3 2.5-2 4 3.5"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4"/></symbol>
 </svg>
 
-<div class="envpill" id="envpill" hidden></div>
-
-<!-- ===== Home: pick a template ===== -->
+<!-- ===== Home ===== -->
 <div id="v-home">
   <header class="hbar"><img src="assets/mu-logo-horizontal.png" alt="Murabbi Ummah"><span class="tagline">Studio Poster</span></header>
   <main class="home">
@@ -190,6 +212,11 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
       <h1>Poster Murabbi Ummah, <span>siap dalam minit.</span></h1>
       <p>Pilih templat, isi maklumat, muat turun. Logo, warna dan fon sentiasa ikut garis panduan.</p>
       <div class="steps3"><span><b>1</b>Pilih templat</span><span><b>2</b>Isi maklumat</span><span><b>3</b>Muat turun</span></div>
+    </section>
+    <section class="mine" id="mine" hidden>
+      <div class="sect"><h2>Poster saya</h2><small id="mcount"></small></div>
+      <p class="nostore" id="nostore" hidden>Pelayar ini tidak membenarkan simpanan. Poster anda tidak akan disimpan selepas halaman ditutup.</p>
+      <div class="mgrid" id="mgrid"></div>
     </section>
     <div class="sect"><h2>Templat</h2><small id="tcount"></small></div>
     <div class="tgrid" id="tgrid"></div>
@@ -200,8 +227,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 <!-- ===== Editor ===== -->
 <div id="v-edit" hidden>
   <header class="ebar">
-    <a class="circle" href="#" aria-label="Kembali ke templat"><svg class="i"><use href="#i-back"/></svg></a>
-    <div class="t"><b id="e-title"></b><small id="e-saved"><i></i><span class="long">Disimpan dalam peranti ini</span><span class="short">Disimpan</span></small></div>
+    <a class="circle" href="#" aria-label="Kembali ke laman utama"><svg class="i"><use href="#i-back"/></svg></a>
+    <div class="t"><b id="e-title"></b><small id="e-saved"><i></i><span id="e-saved-t">Disimpan</span></small></div>
     <div class="right"><button class="pill primary" type="button" data-download><svg class="i"><use href="#i-down"/></svg>Muat turun</button></div>
   </header>
   <div class="ed">
@@ -210,15 +237,14 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
       <span class="zoomnote">Pratonton · fail penuh 1080 × 1350</span>
     </section>
     <aside class="panel">
-      <div class="grab"></div>
       <nav class="tabs" id="tabs" role="tablist"></nav>
       <div class="body" id="body"></div>
-      <div class="foot-ed">
-        <button class="pill ghost" type="button" id="reset">Mula semula</button>
-        <button class="pill primary" type="button" id="next"></button>
-      </div>
     </aside>
   </div>
+  <nav class="modebar" aria-label="Mod">
+    <button type="button" data-mode="edit" aria-pressed="true"><svg class="i"><use href="#i-edit"/></svg>Isi maklumat</button>
+    <button type="button" data-mode="view" aria-pressed="false"><canvas id="mini" width="60" height="75"></canvas>Lihat poster</button>
+  </nav>
 </div>
 
 <!-- ===== Done ===== -->
@@ -237,34 +263,31 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stro
 </div>
 
 <!-- ?v= matches VERSION below: bump both on every release so phones never mix old and new files -->
-<script src="icons.js?v=1.4"></script>
-<script src="engine.js?v=1.4"></script>
-<script src="templates/program.js?v=1.4"></script>
-<script src="templates/jadual.js?v=1.4"></script>
-<script src="templates/profil.js?v=1.4"></script>
-<script src="templates/hikmah.js?v=1.4"></script>
+<script src="icons.js?v=1.5"></script>
+<script src="engine.js?v=1.5"></script>
+<script src="templates/program.js?v=1.5"></script>
+<script src="templates/jadual.js?v=1.5"></script>
+<script src="templates/profil.js?v=1.5"></script>
+<script src="templates/hikmah.js?v=1.5"></script>
+<script src="store.js?v=1.5"></script>
 <script>
+const VERSION = "1.5 · 2 Nov 2026";   // also bump the ?v= on the script tags
+// local preview shows a marker, so it is never mistaken for the live site
+const ENV = /staging/.test(location.hostname) ? "Staging" : /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? "Local" : "";
+
 /* ---------- state ---------- */
-const VERSION = "1.4 · 30 Okt 2026";   // also bump the ?v= on the script tags
-// staging site and local preview show a marker, so they are never mistaken for the live site
-const ENV = /staging/.test(location.hostname) ? "Staging" : /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? "Local" : "";   // bump on every release, so the live version is visible on the home page
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const clone = (o) => JSON.parse(JSON.stringify(o));
 const STATIC = { muLogo: null, muMark: null, isma: null };
-const IMGS = { masjid: null, byTpl: {} };          // uploads live in memory only; masjid logo is shared
-let tplId = null, T = null, S = {}, tab = 0, lastBlob = null, lastName = "";
+let P = null;            // the open poster record
+let tplId = null, T = null, S = {}, tab = 0;
+let IMGS = {}, BLOBS = {};   // the open poster's images: decoded for drawing, and as stored
+let visited = new Set(), lastBlob = null, lastName = "";
+const imgsFor = () => Object.assign({}, STATIC, IMGS);
 
-const store = {
-  get(id) { try { return JSON.parse(localStorage.getItem("mu:" + id) || "null"); } catch { return null; } },
-  set(id, v) { try { localStorage.setItem("mu:" + id, JSON.stringify(v)); } catch {} },
-};
-const imgsFor = (id) => Object.assign({}, STATIC, { masjid: IMGS.masjid }, IMGS.byTpl[id] || {});
-const getImg = (key) => key === "masjid" ? IMGS.masjid : (IMGS.byTpl[tplId] || {})[key] || null;
-const setImg = (key, img) => { if (key === "masjid") IMGS.masjid = img; else (IMGS.byTpl[tplId] = IMGS.byTpl[tplId] || {})[key] = img; };
-
-// split a template's fields into tabs at each section
+// split a template's fields into steps at each section
 function tabsOf(t) {
   const out = [];
   for (const f of t.fields) {
@@ -275,19 +298,31 @@ function tabsOf(t) {
 }
 
 /* ---------- home ---------- */
-function renderHome() {
+const when = (ts) => { const d = new Date(ts); return `${d.getDate()} ${BULAN_PENDEK[d.getMonth()]}, ${d.getHours()}.${String(d.getMinutes()).padStart(2, "0")}`; };
+async function renderHome() {
   const ids = Object.keys(TEMPLATES);
   $("#tcount").textContent = ids.length + " templat";
   $("#tgrid").innerHTML = ids.map((id) => `
-    <a class="tcard" href="#${id}">
+    <a class="tcard" href="#baru/${id}">
       <div class="thumb"><img data-thumb="${id}" alt="Contoh ${esc(TEMPLATES[id].name)}"></div>
       <div class="meta"><div><b>${esc(TEMPLATES[id].name)}</b><small>Instagram, Facebook, WhatsApp · 4:5</small></div><span class="go"><svg class="i"><use href="#i-next"/></svg></span></div>
     </a>`).join("");
-  // thumbnails are drawn live from each template's sample, so they always match the real output
+  // template thumbnails are drawn live from each sample, so they always match the real output
   for (const id of ids) {
-    TEMPLATES[id].draw(clone(TEMPLATES[id].sample), Object.assign({}, STATIC, { masjid: null, photo: null }));
+    TEMPLATES[id].draw(clone(TEMPLATES[id].sample), Object.assign({}, STATIC));
     $(`[data-thumb="${id}"]`).src = cv.toDataURL("image/jpeg", 0.82);
   }
+  const posters = (await Store.all()).filter((p) => TEMPLATES[p.tpl]).sort((a, b) => b.updated - a.updated);
+  $("#mine").hidden = !posters.length && Store.ok;
+  $("#nostore").hidden = Store.ok;
+  $("#mcount").textContent = posters.length + " poster";
+  $("#mgrid").innerHTML = posters.map((p) => `
+    <div class="mcard">
+      <a href="#p/${p.id}"><div class="thumb">${p.thumb ? `<img src="${p.thumb}" alt="">` : ""}</div>
+        <b>${esc(TEMPLATES[p.tpl].title(p.data) || TEMPLATES[p.tpl].name)}</b>
+        <small>${esc(TEMPLATES[p.tpl].name)} · ${when(p.updated)}${p.downloaded ? " · dimuat turun" : ""}</small></a>
+      <div class="acts"><button type="button" data-dup="${p.id}">Salin</button><button type="button" class="del" data-del="${p.id}">Padam</button></div>
+    </div>`).join("");
 }
 
 /* ---------- editor: form ---------- */
@@ -299,7 +334,7 @@ function field(f) {
     case "text":
       return `<label class="f">${lab}<input type="${f.input || "text"}" data-f="${f.id}" value="${esc(v)}" placeholder="${esc(f.ph)}" autocomplete="off">${hint}</label>`;
     case "choice":
-      return `<div class="f">${lab}<div class="chips">${f.options.map((o) => `<button type="button" class="chip" data-choice="${f.id}" data-v="${esc(o)}" aria-pressed="${v === o}">${esc(o)}</button>`).join("")}</div><input type="text" data-f="${f.id}" value="${esc(v)}" maxlength="20" aria-label="${esc(f.label)}"></div>`;
+      return `<div class="f">${lab}<div class="chips">${f.options.map((o) => `<button type="button" class="chip" data-choice="${f.id}" data-v="${esc(o)}" aria-pressed="${v === o}">${esc(o)}</button>`).join("")}</div><input type="text" data-f="${f.id}" value="${esc(v)}" maxlength="24" aria-label="${esc(f.label)}"></div>`;
     case "date":
       return `<label class="f">${lab}<input type="date" data-f="${f.id}" value="${esc(v)}"><span class="hint" id="show-${f.id}"></span></label>`;
     case "textarea":
@@ -309,13 +344,13 @@ function field(f) {
     case "multi":
       return `<div class="f">${lab}<div class="chips" style="margin:0">${f.options.map(([k, l]) => `<button type="button" class="chip" data-multi="${f.id}" data-v="${k}" aria-pressed="${(v || []).includes(k)}">${esc(l)}</button>`).join("")}</div></div>`;
     case "image": {
-      const has = getImg(f.id);
+      const has = IMGS[f.id];
       const sliders = f.sliders && has ? `<div class="sl">
           <span>Zum</span><input type="range" min="1" max="2.5" step="0.01" value="${S[f.id + "Zoom"] ?? 1}" data-s="${f.id}Zoom">
           <span>Kiri–kanan</span><input type="range" min="-1" max="1" step="0.01" value="${S[f.id + "X"] ?? 0}" data-s="${f.id}X">
-          <span>Atas–bawah</span><input type="range" min="-1" max="1" step="0.01" value="${S[f.id + "Y"] ?? -0.4}" data-s="${f.id}Y"></div>` : "";
+          <span>Atas–bawah</span><input type="range" min="-1" max="1" step="0.01" value="${S[f.id + "Y"] ?? (f.id === "photo" ? -0.4 : 0)}" data-s="${f.id}Y"></div>` : "";
       return `<div class="f">${lab}<div class="drop">
-          <div class="ph ${f.contain ? "contain" : ""}" id="ph-${f.id}" style="${has ? `background-image:url(${has.src})` : ""}">${has ? "" : '<svg class="i"><use href="#i-img"/></svg>'}</div>
+          <div class="ph ${f.contain ? "contain" : ""}" style="${has ? `background-image:url(${has.src})` : ""}">${has ? "" : '<svg class="i"><use href="#i-img"/></svg>'}</div>
           <div class="acts"><label class="pick"><svg class="i"><use href="#i-img"/></svg>${has ? "Tukar gambar" : "Pilih gambar"}<input type="file" accept="image/*" data-img="${f.id}"></label>
           ${has ? `<button type="button" class="rm" data-rm="${f.id}">Buang</button>` : ""}</div></div>${sliders}${hint}</div>`;
     }
@@ -336,55 +371,139 @@ function field(f) {
   }
   return "";
 }
+
+// a step is done when its required fields are filled; steps with only optional fields, once visited
+function stepDone(t, i) {
+  const req = t.fields.filter((f) => !f.opt && ["text", "date", "textarea", "image", "table"].includes(f.type) && f.label);
+  if (!req.length) return visited.has(i);
+  return req.every((f) => f.type === "image" ? !!IMGS[f.id] : f.type === "table" ? (S[f.id] || []).some((r) => r.tarikh || r.program) : !!String(S[f.id] || "").trim());
+}
+// fields still holding the template's sample text, so nobody posts "Ustaz Nur Wan Kecik" by mistake
+function sampleLeft() {
+  const s = T.sample;
+  return T.fields.filter((f) => ["text", "textarea", "date", "table"].includes(f.type) && s[f.id] != null && s[f.id] !== "" && JSON.stringify(S[f.id]) === JSON.stringify(s[f.id]) && !["akaun", "telefon", "jenis", "label"].includes(f.id));
+}
 function renderTabs() {
   const tabs = tabsOf(T);
+  visited.add(tab);
   $("#tabs").style.setProperty("--n", tabs.length);
-  $("#tabs").innerHTML = tabs.map((t, i) => `<button class="tab" role="tab" type="button" data-tab="${i}" aria-selected="${i === tab}"><span class="n">${i + 1}</span><span class="lbl">${esc(t.tab)}</span></button>`).join("");
-  const cur = tabs[tab];
-  $("#body").innerHTML = (cur.note ? `<p class="lead">${esc(cur.note)}</p>` : "") + `<div class="group">${cur.fields.map(field).join("")}</div>`;
-  const last = tab === tabs.length - 1;
-  $("#next").innerHTML = last ? `<svg class="i"><use href="#i-down"/></svg><span>Muat turun poster</span>` : `<span>Seterusnya: ${esc(tabs[tab + 1].tab)}</span><svg class="i"><use href="#i-next"/></svg>`;
+  $("#tabs").innerHTML = tabs.map((t, i) => {
+    const done = i !== tab && stepDone(t, i);
+    return `<button class="tab ${done ? "done" : ""}" role="tab" type="button" data-tab="${i}" aria-selected="${i === tab}"><span class="n">${done ? '<svg class="i"><use href="#i-check"/></svg>' : i + 1}</span><span class="lbl">${esc(t.tab)}</span></button>`;
+  }).join("");
+  const cur = tabs[tab], last = tab === tabs.length - 1;
+  const left = sampleLeft();
+  $("#body").innerHTML =
+    (left.length && tab === 0 ? `<p class="sample">Teks contoh masih ada. Gantikan dengan maklumat anda: ${esc(left.map((f) => f.label || f.id).join(", "))}.</p>` : "") +
+    (cur.note ? `<p class="lead">${esc(cur.note)}</p>` : "") +
+    `<div class="group">${cur.fields.map(field).join("")}</div>
+     <div class="nextwrap">
+       <button class="pill primary block" type="button" id="next">${last ? `<svg class="i"><use href="#i-down"/></svg><span>Muat turun poster</span>` : `<span>Seterusnya: ${esc(tabs[tab + 1].tab)}</span><svg class="i"><use href="#i-next"/></svg>`}</button>
+       <button class="linkbtn" type="button" id="reset">Kosongkan poster ini</button>
+     </div>`;
   $("#next").dataset.last = last ? "1" : "";
   updateHints();
 }
+function goTab(i) {
+  tab = i; renderTabs();
+  if (matchMedia("(max-width:900px)").matches) window.scrollTo(0, 0); else $("#body").scrollTop = 0;
+}
 
-/* ---------- editor: draw + hints ---------- */
-let raf = 0;
-function render() { T.draw(S, imgsFor(tplId)); updateHints(); }
-function changed() { store.set(tplId, S); savedPulse(); cancelAnimationFrame(raf); raf = requestAnimationFrame(render); }
-function savedPulse() { const el = $("#e-saved"); el.classList.add("on"); clearTimeout(savedPulse.t); savedPulse.t = setTimeout(() => el.classList.remove("on"), 1200); }
+/* ---------- editor: draw, hints, saving ---------- */
+let raf = 0, saveT = 0;
+function render() {
+  T.draw(S, imgsFor()); updateHints();
+  const m = $("#mini"); m.getContext("2d").drawImage(cv, 0, 0, m.width, m.height);
+}
+function changed() {
+  cancelAnimationFrame(raf); raf = requestAnimationFrame(render);
+  setSaved("busy");
+  clearTimeout(saveT); saveT = setTimeout(saveNow, 600);
+}
+async function saveNow() {
+  if (!P) return;
+  render();
+  const t = document.createElement("canvas"); t.width = 216; t.height = 270;
+  t.getContext("2d").drawImage(cv, 0, 0, t.width, t.height);
+  Object.assign(P, { data: clone(S), images: Object.assign({}, BLOBS), thumb: t.toDataURL("image/jpeg", 0.75), updated: Date.now() });
+  await Store.put(P);
+  setSaved("ok");
+}
+function setSaved(state) {
+  const el = $("#e-saved");
+  el.classList.toggle("busy", state === "busy");
+  const phone = matchMedia("(max-width:900px)").matches;
+  $("#e-saved-t").textContent = state === "busy" ? "Menyimpan…" : !Store.ok ? "Tidak disimpan" : phone ? "Disimpan" : "Disimpan dalam peranti ini";
+}
 function updateHints() {
   $$("[data-hint]").forEach((el) => {
-    const k = el.dataset.hint, f = T.fields.find((x) => x.id === k);
-    const over = !!OVER[k];
+    const k = el.dataset.hint, f = T.fields.find((x) => x.id === k), over = !!OVER[k];
     el.className = "hint" + (over ? " warn" : "");
     el.textContent = over ? "Terlalu panjang untuk poster. Pendekkan sedikit." : (f && f.help) || "";
     $$(`[data-f="${k}"]`).forEach((i) => i.classList.toggle("over", over));
   });
   const d = T.fields.find((f) => f.type === "date");
   if (d && $("#show-" + d.id)) $("#show-" + d.id).textContent = S[d.id] ? "Di poster: " + tarikhPoster(S[d.id]) : "";
-  tabsOf(T).forEach((t, i) => {
-    const b = $(`[data-tab="${i}"]`);
-    if (b) b.classList.toggle("warn", t.fields.some((f) => OVER[f.id]));
-  });
+  tabsOf(T).forEach((t, i) => { const b = $(`[data-tab="${i}"]`); if (b) b.classList.toggle("warn", t.fields.some((f) => OVER[f.id])); });
 }
 
-/* ---------- routing ---------- */
-function route() {
-  const id = location.hash.slice(1);
-  if (TEMPLATES[id]) {
-    tplId = id; T = TEMPLATES[id]; tab = 0;
-    S = Object.assign(clone(T.empty), store.get(id) || clone(T.sample));
-    $("#v-home").hidden = true; $("#v-edit").hidden = false;
-    $("#e-title").textContent = T.name;
-    document.title = (ENV ? "[" + ENV + "] " : "") + T.name + " · Murabbi Ummah";
-    renderTabs(); render();
-  } else {
-    tplId = null; T = null;
-    $("#v-edit").hidden = true; $("#v-home").hidden = false;
-    document.title = (ENV ? "[" + ENV + "] " : "") + "Studio Poster · Murabbi Ummah";
-    renderHome();
+// photos are resized once on upload (long side 1800 px), so many posters fit in the browser's storage
+async function prepImage(file) {
+  const url = URL.createObjectURL(file), img = await loadImg(url);
+  URL.revokeObjectURL(url);
+  if (!img) return null;
+  const s = Math.min(1, 1800 / Math.max(img.width, img.height)), c = document.createElement("canvas");
+  c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+  c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+  return new Promise((r) => c.toBlob(r, file.type === "image/png" ? "image/png" : "image/jpeg", 0.9));
+}
+const blobImg = (b) => loadImg(URL.createObjectURL(b));
+
+/* ---------- posters: open, new, duplicate, delete ---------- */
+const newId = () => "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+async function createPoster(tid, data, images) {
+  const p = { id: newId(), tpl: tid, data: data || clone(TEMPLATES[tid].sample), images: images || {}, thumb: "", created: Date.now(), updated: Date.now() };
+  await Store.put(p);
+  return p;
+}
+async function openPoster(p) {
+  P = p; tplId = p.tpl; T = TEMPLATES[tplId];
+  S = Object.assign(clone(T.empty), p.data);
+  BLOBS = Object.assign({}, p.images || {}); IMGS = {};
+  for (const [k, b] of Object.entries(BLOBS)) if (b) IMGS[k] = await blobImg(b);
+  tab = 0; visited = new Set();
+  $("#v-home").hidden = true; $("#v-edit").hidden = false;
+  setMode("edit");
+  $("#e-title").textContent = T.name;
+  document.title = (ENV ? "[" + ENV + "] " : "") + T.name + " · Murabbi Ummah";
+  setSaved("ok"); renderTabs(); render();
+  if (!p.thumb) saveNow();
+}
+function setMode(m) {
+  $("#v-edit").classList.toggle("view", m === "view");
+  $$("[data-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+  window.scrollTo(0, 0);
+}
+
+/* ---------- routing: #  ·  #baru/<template>  ·  #p/<poster> ---------- */
+async function route() {
+  const [kind, arg] = location.hash.slice(1).split("/");
+  $("#done").hidden = true;
+  if (kind === "baru" && TEMPLATES[arg]) {
+    const p = await createPoster(arg);
+    history.replaceState(null, "", "#p/" + p.id);   // a reload reopens this poster instead of making another
+    return openPoster(p);
   }
+  if (TEMPLATES[kind]) { location.hash = "#baru/" + kind; return; }   // old links like #program
+  if (kind === "p" && arg) {
+    const p = await Store.get(arg);
+    if (p && TEMPLATES[p.tpl]) return openPoster(p);
+  }
+  if (P) { clearTimeout(saveT); await saveNow(); }
+  P = null; T = null; tplId = null;
+  $("#v-edit").hidden = true; $("#v-home").hidden = false;
+  document.title = (ENV ? "[" + ENV + "] " : "") + "Studio Poster · Murabbi Ummah";
+  await renderHome();
   window.scrollTo(0, 0);
 }
 
@@ -400,7 +519,7 @@ document.addEventListener("input", (e) => {
   if (d.f) $$(`[data-choice="${d.f}"]`).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === S[d.f])));
   changed();
 });
-document.addEventListener("change", (e) => {
+document.addEventListener("change", async (e) => {
   if (!T) return;
   const d = e.target.dataset;
   if (d.t) { S[d.t] = e.target.checked; changed(); return; }
@@ -409,17 +528,17 @@ document.addEventListener("change", (e) => {
   if (d.img) {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
-    const url = URL.createObjectURL(file);
-    loadImg(url).then((img) => {
-      if (!img) { alert("Gambar tidak dapat dibuka. Cuba fail JPG atau PNG."); return; }
-      setImg(d.img, img);
-      renderTabs(); changed();
-    });
+    const blob = await prepImage(file);
+    if (!blob) { alert("Gambar tidak dapat dibuka. Cuba fail JPG atau PNG."); return; }
+    BLOBS[d.img] = blob; IMGS[d.img] = await blobImg(blob);
+    renderTabs(); changed();
   }
 });
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
   const t = e.target.closest("[data-tab]");
-  if (t) { tab = +t.dataset.tab; renderTabs(); $("#body").scrollTop = 0; return; }
+  if (t) { goTab(+t.dataset.tab); return; }
+  const md = e.target.closest("[data-mode]");
+  if (md) { setMode(md.dataset.mode); return; }
   const c = e.target.closest("[data-choice]");
   if (c) { S[c.dataset.choice] = c.dataset.v; $(`[data-f="${c.dataset.choice}"]`).value = c.dataset.v; $$(`[data-choice="${c.dataset.choice}"]`).forEach((b) => b.setAttribute("aria-pressed", String(b === c))); changed(); return; }
   const m = e.target.closest("[data-multi]");
@@ -433,41 +552,48 @@ document.addEventListener("click", (e) => {
   const rd = e.target.closest("[data-row-del]");
   if (rd) { S[rd.dataset.rowDel].splice(+rd.dataset.i, 1); renderTabs(); changed(); return; }
   const r = e.target.closest("[data-rm]");
-  if (r) { setImg(r.dataset.rm, null); renderTabs(); changed(); return; }
+  if (r) { delete BLOBS[r.dataset.rm]; delete IMGS[r.dataset.rm]; renderTabs(); changed(); return; }
   if (e.target.closest("[data-download]")) { download(); return; }
-  if (e.target.closest("#next")) {
-    if ($("#next").dataset.last) download();
-    else { tab++; renderTabs(); $("#body").scrollTop = 0; }
+  if (e.target.closest("#next")) { if ($("#next").dataset.last) download(); else goTab(tab + 1); return; }
+  if (e.target.closest("#reset")) {
+    if (!confirm("Kosongkan semua maklumat dalam poster ini?")) return;
+    S = clone(T.empty); BLOBS = {}; IMGS = {}; visited = new Set(); goTab(0); changed(); return;
+  }
+  const dup = e.target.closest("[data-dup]");
+  if (dup) {
+    const src = await Store.get(dup.dataset.dup);
+    if (src) { const p = await createPoster(src.tpl, clone(src.data), Object.assign({}, src.images)); location.hash = "#p/" + p.id; }
     return;
   }
-  if (e.target.closest("#reset")) {
-    if (!confirm("Kosongkan semua maklumat untuk templat ini?")) return;
-    S = clone(T.empty); delete IMGS.byTpl[tplId]; tab = 0; store.set(tplId, S); renderTabs(); render(); return;
-  }
+  const del = e.target.closest("[data-del]");
+  if (del) { if (confirm("Padam poster ini? Ia tidak boleh dikembalikan.")) { await Store.del(del.dataset.del); renderHome(); } return; }
   if (e.target.closest("#close-done") || e.target.id === "done") { $("#done").hidden = true; return; }
-  if (e.target.closest("#again")) { save(lastBlob, lastName); return; }
+  if (e.target.closest("#again")) { saveFile(lastBlob, lastName); return; }
   if (e.target.closest("#share")) { share(); return; }
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#done").hidden = true; });
+window.addEventListener("pagehide", () => { if (P) { clearTimeout(saveT); saveNow(); } });
 
 /* ---------- download & share ---------- */
-function save(blob, name) {
+function saveFile(blob, name) {
   const url = URL.createObjectURL(blob), a = document.createElement("a");
   a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 5000);
 }
 function download() {
   render();
-  const labels = T.fields.filter((f) => OVER[f.id]).map((f) => f.label || f.id);
-  if (labels.length && !confirm("Ada teks yang terlalu panjang (" + labels.join(", ") + "). Muat turun juga?")) return;
+  const over = T.fields.filter((f) => OVER[f.id]).map((f) => f.label || f.id);
+  if (over.length && !confirm("Ada teks yang terlalu panjang (" + over.join(", ") + "). Muat turun juga?")) return;
+  const left = sampleLeft().map((f) => f.label || f.id);
+  if (left.length && !confirm("Masih ada teks contoh (" + left.join(", ") + "). Muat turun juga?")) return;
   const name = ("MU-" + T.short + "-" + (T.title(S) || "poster")).replace(/[^\w-]+/g, "-").replace(/-+/g, "-").replace(/-$/, "") + ".png";
   cv.toBlob((b) => {
     lastBlob = b; lastName = name;
-    save(b, name);
+    saveFile(b, name);
+    if (P) { P.downloaded = Date.now(); saveNow(); }
     $("#done-img").src = cv.toDataURL("image/jpeg", 0.8);
     $("#done-name").textContent = name;
-    const file = new File([b], name, { type: "image/png" });
-    $("#share").hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
+    $("#share").hidden = !(navigator.canShare && navigator.canShare({ files: [new File([b], name, { type: "image/png" })] }));
     $("#done").hidden = false;
   }, "image/png");
 }
@@ -481,11 +607,13 @@ async function share() {
     loadImg("assets/mu-logo-horizontal-on-navy.png"), loadImg("assets/mu-mark.png"), loadImg("assets/logo-isma.png")]);
   Object.assign(STATIC, { muLogo, muMark, isma });
   try { await Promise.all(['400 40px "Krona One"', "400 24px Inter", "600 24px Inter", "700 24px Inter"].map((f) => document.fonts.load(f))); } catch {}
+  await Store.init();
+  await Store.importOldDrafts(TEMPLATES);
   $("#ver").textContent = "Versi " + VERSION + (ENV ? " · " + ENV : "");
   if (ENV) { $("#envpill").textContent = ENV; $("#envpill").hidden = false; }
   window.addEventListener("hashchange", route);
-  route();
-  document.fonts.ready.then(() => (T ? render() : renderHome()));
+  await route();
+  document.fonts.ready.then(() => (T ? render() : null));
 })();
 </script>
 </body>
